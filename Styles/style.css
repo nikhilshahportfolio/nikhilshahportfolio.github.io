@@ -1,105 +1,209 @@
-    html {
-        font-size: 15px;
-        font-family: "Open Sans", sans-serif;
-        color: #18206F;
-    }
+ body {
+     margin: 0;
+     font-family: "Open Sans", sans-serif;
+     background: white;
+     color: #4A4238;
+ }
 
-    .indexbody {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 0 40px;
-        /* background-color: whitesmoke; */
-        text-shadow: 1px 1px 1px #d7d8e4;
-    }
+ .navbar {
+    /* margin-top: 40px; */
+    padding-top: 20px;
+ }
 
-    .body-image {
-        /* padding-top: 50px; */
-        width: 300px;
-        height: 300px;
-
-        object-fit: cover;
-        object-position: center;
-    }
-
-    .nav {
-        padding-top: 50px;
+ 
+ .paper {
+     max-width: 650px;
+     background-color: #fff8e6;
+     margin: 0 auto;
+     margin-top: 50px;
+     padding: 0 45px;
+     box-sizing: border-box;
+     text-shadow: 1px 1px 1px #d7d8e4;
+     min-height: 600px;
+ }
 
 
-    }
+ .body-image {
+     /* padding-top: 50px; */
+     width: 300px;
+     height: 300px;
 
-    header ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
+     object-fit: cover;
+     object-position: center;
+ }
 
-        display: flex;
-        align-items: center;
-        gap: 30px;
-        font-size: 12px;
-    }
+ header ul {
+     list-style-type: none;
+     padding: 0;
+     margin: 0;
 
-    header ul li:nth-child(2) {
-        margin-left: auto;
-    }
+     display: flex;
+     align-items: center;
+     gap: 190px;
+     font-size: 12px;
+ }
 
-    header ul li:not(:first-child) {
-        margin-left: 1px;
-    }
+ header ul li:nth-child(2) {
+     margin-left: auto;
+ }
 
-    header ul li a {
-        text-decoration: none;
-        color: grey;
-    }
+ header ul li:not(:first-child) {
+     margin-left: 1px;
+ }
 
-    .profile {
-        margin-top: 50px;
-        display: grid;
-        grid-template-columns: 300px 1fr;
-        gap: 20px;
-        align-items: normal;
+ header ul li a {
+     text-decoration: none;
+     color: grey;
+ }
 
-    }
+ .intro{
+    padding-top: 120px;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0px;
+    align-items: center;
+ }
 
+ .body-image{
+ width: 80%;
+ height: 100%;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+ }
 
+ .intro-text h1{
+   font-size: 20px;
+ }
 
-    /* Projects page css starts here --> */
-
-    .projects {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 0 40px;
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 12px;
-        padding: 16px;
-        margin-top: 30px;
-
-    }
-
-    .projecttitle {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 0 40px;
-    }
-
-    .tempimg {
-        width: 100%;
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-    }
+ .intro-text p{
+    font-size: 10px;
+    line-height: 1.8;
+ }
 
 
-    .projectcard {
-        padding: 20px;
-        /* width: 300px; */
-        border-style: solid;
-        border-radius: 6px;
-        border-color: black;
-        border-width: 1px;
-        background-color: rgb(227, 227, 227);
-    }
+ .project-card {
+     max-width: 650px;
+     background-color: #fff8e6;
+     margin: 0 auto;
+     margin-top: 50px;
+     padding: 0 45px;
+     box-sizing: border-box;
+     text-shadow: 1px 1px 1px #d7d8e4;
+     min-height: 600px;
+ }
+
+ .project-description {
+     font-size: 12px;
+ }
+
+ .project-hero {
+     width: 100%;
+     aspect-ratio: 16 / 9;
+     object-fit: cover;
+ }
+
+ .project-title {
+    padding-top: 50px;
+     margin: 0;
+ }
+
+ .project-date {
+     font-size: 8px;
+     color: grey;
+ }
+
+ .project-header {
+     display: grid;
+     grid-template-columns: 1fr auto;
+     align-items: end;
+ }
+ 
+ .project-tags{
+    font-size: 9px;
+    font-style: italic;
+ }
+
+.project-button {
+    display: inline-block;
+    margin-top: 20px;
+
+     color: #4A4238;
+     text-decoration: none;
+
+     font-size: 9px;
+     font-weight: 600;
+}
+
+.project-button:hover{
+
+    text-decoration: underline;
+}
 
 
-    hr {
-        margin-top: 50px;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /* Projects page css starts here --> */
+
+ .projects {
+     max-width: 1200px;
+     margin: 0 auto;
+     padding: 0 40px;
+     display: grid;
+     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+     gap: 12px;
+     padding: 16px;
+     margin-top: 30px;
+
+ }
+
+ .projecttitle {
+     max-width: 800px;
+     margin: 0 auto;
+     padding: 0 40px;
+ }
+
+ .tempimg {
+     width: 100%;
+     aspect-ratio: 16 / 9;
+     object-fit: cover;
+ }
+
+
+ .projectcard {
+     padding: 20px;
+     /* width: 300px; */
+     border-style: solid;
+     border-radius: 6px;
+     border-color: black;
+     border-width: 1px;
+     background-color: rgb(227, 227, 227);
+ }
+
+
+ hr {
+     margin-top: 50px;
+ }
