@@ -139,6 +139,15 @@
     text-decoration: underline;
 }
 
+.foot{
+    padding-top: 50px;
+    padding-bottom: 20px;
+    font-size: 10px;
+    /* font-style: italic; */
+    display: grid;
+    place-items: center;
+}
+
 
 
 
@@ -160,16 +169,35 @@
 }
 
 .project-card-casestudy p{
-    padding: 80px;
+    padding: 5px;
     font-size: 14px;
 }
 
 
 
+/* // Zupto // */
+.medicaltax{
+    padding-top: 20px;
+    width: 100%;
+    height: 10%;
+    aspect-ratio: 2/1;
+    object-fit: fill;
+    margin: 0%;
+}
 
-
-
-
+.zupto_images{
+    /* margin: 0 auto; */
+    /* aspect-ratio: 1/1;
+    object-fit: cover;
+    width: 100%;
+    height: 100%; */
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minimax(200px,1fr));
+    gap: 10px;
+    margin: 0 auto;
+    
+}
 
 
 
