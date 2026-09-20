@@ -1,213 +1,307 @@
- body {
-     margin: 0;
-     font-family: "Open Sans", sans-serif;
-     background: white;
-     color: #4A4238;
- }
+        body {
+            margin: 0;
+            font-family: "Open Sans", sans-serif;
+            background: white;
+            color: #4A4238;
+        }
 
- .navbar {
-    /* margin-top: 40px; */
-    padding-top: 20px;
- }
-
- 
- .paper {
-     max-width: 650px;
-     background-color: #fff8e6;
-     margin: 0 auto;
-     margin-top: 50px;
-     padding: 0 45px;
-     box-sizing: border-box;
-     text-shadow: 1px 1px 1px #d7d8e4;
-     min-height: 600px;
- }
+        .navbar {
+            /* margin-top: 40px; */
+            padding-top: 20px;
+        }
 
 
- .body-image {
-     /* padding-top: 50px; */
-     width: 300px;
-     height: 300px;
-
-     object-fit: cover;
-     object-position: center;
- }
-
- header ul {
-     list-style-type: none;
-     padding: 0;
-     margin: 0;
-
-     display: flex;
-     align-items: center;
-     gap: 190px;
-     font-size: 12px;
- }
-
- header ul li:nth-child(2) {
-     margin-left: auto;
- }
-
- header ul li:not(:first-child) {
-     margin-left: 1px;
- }
-
- header ul li a {
-     text-decoration: none;
-     color: grey;
- }
-
- .intro{
-    padding-top: 120px;
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 0px;
-    align-items: center;
- }
-
- .body-image{
- width: 80%;
- height: 100%;
-    aspect-ratio: 1/1;
-    object-fit: cover;
- }
-
- .intro-text h1{
-   font-size: 20px;
- }
-
- .intro-text p{
-    font-size: 10px;
-    line-height: 1.8;
- }
+        .paper {
+            max-width: 550px;
+            background-color: #fff8e6;
+            margin: 0 auto;
+            margin-top: 50px;
+            padding: 0 45px;
+            box-sizing: border-box;
+            text-shadow: 1px 1px 1px #d7d8e4;
+            min-height: 600px;
+        }
 
 
- .project-card {
-     max-width: 650px;
-     background-color: #fff8e6;
-     margin: 0 auto;
-     margin-top: 50px;
-     padding: 0 45px;
-     box-sizing: border-box;
-     text-shadow: 1px 1px 1px #d7d8e4;
-     min-height: 600px;
- }
+        .body-image {
+            /* padding-top: 50px; */
+            width: 300px;
+            height: 300px;
 
- .project-description {
-     font-size: 12px;
- }
+            object-fit: cover;
+            object-position: center;
+        }
 
- .project-hero {
-     width: 100%;
-     aspect-ratio: 16 / 9;
-     object-fit: cover;
- }
+        header ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
 
- .project-title {
-    padding-top: 50px;
-     margin: 0;
- }
+            display: flex;
+            align-items: center;
+            gap: 190px;
+            font-size: 12px;
+        }
 
- .project-date {
-     font-size: 8px;
-     color: grey;
- }
+        header ul li:nth-child(2) {
+            margin-left: auto;
+        }
 
- .project-header {
-     display: grid;
-     grid-template-columns: 1fr auto;
-     align-items: end;
- }
- 
- .project-tags{
-    font-size: 9px;
-    font-style: italic;
- }
+        header ul li:not(:first-child) {
+            margin-left: 1px;
+        }
 
-.project-button {
-    display: inline-block;
-    margin-top: 20px;
+        header ul li a {
+            text-decoration: none;
+            color: grey;
+        }
 
-     color: #4A4238;
-     text-decoration: none;
+        .intro {
+            padding-top: 120px;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 0px;
+            align-items: center;
+        }
 
-     font-size: 9px;
-     font-weight: 600;
-}
+        .body-image {
+            width: 80%;
+            height: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+        }
 
-.project-button:hover{
+        .intro-text h1 {
+            font-size: 20px;
+        }
 
-    text-decoration: underline;
-}
-
-.foot{
-    padding-top: 50px;
-    padding-bottom: 20px;
-    font-size: 10px;
-    /* font-style: italic; */
-    display: grid;
-    place-items: center;
-}
+        .intro-text p {
+            font-size: 10px;
+            line-height: 1.8;
+        }
 
 
+        .project-card {
+            max-width: 550px;
+            background-color: #fff8e6;
+            margin: 0 auto;
+            margin-top: 50px;
+            padding: 0 45px;
+            box-sizing: border-box;
+            text-shadow: 1px 1px 1px #d7d8e4;
+            min-height: 680px;
+        }
 
+        .project-description {
+            font-size: 12px;
+        }
 
+        .project-hero {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
 
+        .project-title {
+            padding-top: 50px;
+            margin: 0;
+        }
 
-/* ///Ministry of Misconduct/// */
+        .project-date {
+            font-size: 8px;
+            color: grey;
+        }
 
+        .project-header {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: end;
+        }
 
-.project-card-casestudy{
-    background-color: red;
-    max-width: 1200px;
-     background-color: #fff8e6;
-     margin: 0 auto;
-     margin-top: 50px;
-     padding: 0 45px;
-     box-sizing: border-box;
-     text-shadow: 1px 1px 1px #d7d8e4;
-     /* min-height: 600px; */
-}
+        .project-tags {
+            font-size: 9px;
+            font-style: italic;
+        }
 
-.project-card-casestudy p{
-    padding: 5px;
-    font-size: 14px;
-}
+        .project-button {
+            display: inline-block;
+            margin-top: 20px;
 
+            color: #4A4238;
+            text-decoration: none;
 
+            font-size: 9px;
+            font-weight: 600;
+        }
 
-/* // Zupto // */
-.medicaltax{
-    padding-top: 20px;
-    width: 100%;
-    height: 10%;
-    aspect-ratio: 2/1;
-    object-fit: fill;
-    margin: 0%;
-}
+        .project-button:hover {
 
-.zupto_images{
-    /* margin: 0 auto; */
-    /* aspect-ratio: 1/1;
-    object-fit: cover;
-    width: 100%;
-    height: 100%; */
-    
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minimax(200px,1fr));
-    gap: 10px;
-    margin: 0 auto;
-    
-}
+            text-decoration: underline;
+        }
+
+        .foot {
+            padding-top: 50px;
+            padding-bottom: 20px;
+            font-size: 10px;
+            /* font-style: italic; */
+            display: grid;
+            place-items: center;
+        }
 
 
 
 
 
 
+        /* ///Ministry of Misconduct/// */
+
+
+        .project-card-casestudy {
+            background-color: red;
+            max-width: 800px;
+            background-color: #fff8e6;
+            margin: 0 auto;
+            margin-top: 50px;
+            padding: 0 45px;
+            box-sizing: border-box;
+            text-shadow: 1px 1px 1px #d7d8e4;
+            padding-bottom: 50px;
+            /* min-height: 600px; */
+        }
+
+        .project-card-casestudy p {
+            padding: 5px;
+            font-size: 12px;
+        }
 
 
 
+        /* // Zupto // */
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 40% 60%;
+            gap: 20px;
+            align-items: normal;
+        }
+
+        .Taxingthemhero {
+            padding-top: 30px;
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .textside {
+            padding-top: 50px;
+        }
+
+
+        /* Ghar jo hum piche chhod aaye */
+
+        .slideshow {
+            display: flex;
+            overflow-x: auto;
+            gap: 10px;
+            scroll-snap-type: x mandatory;
+        }
+
+        .slideshow img {
+            width: 100%;
+            flex-shrink: 0;
+            aspect-ratio: 16/9;
+            object-fit: contain;
+            scroll-snap-align: start;
+        }
+
+        .arrows {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+            justify-content: flex-end;
+        }
+
+        .arrows button {
+            background: none;
+            border: 1px solid #4A4238;
+            color: #4A4238;
+            padding: 4px 12px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        iframe {
+            aspect-ratio: 16/9;
+            border: none;
+        }
+
+        .protitle {
+            padding-top: 5px;
+            display: grid;
+            grid-template-columns: 50% 50%;
+        }
+
+        .protitle h3 {
+            grid-column-start: 1;
+        }
+
+        .protitle p {
+            grid-column-start: 2;
+            text-align: right;
+        }
+
+        .button {
+            grid-column-start: 1;
+
+        }
 
 
 
+        .ghar-hero {
+            /* padding-top: 4px;     */
+            width: 100%;
+            aspect-ratio: 3/2;
+            object-fit: cover;
 
+
+        }
+
+        .lattuchulha {
+            display: grid;
+            grid-template-columns: 50% 50%;
+            gap: 10px;
+        }
+
+        .chulha {
+            /* padding: 10px; */
+            /* grid-column-start: 1; */
+            width: 100%;
+            aspect-ratio: 3/2;
+            object-fit: cover;
+        }
+
+        .lattu {
+            /* padding: 10px; */
+
+            /* grid-column-start: 2; */
+            width: 100%;
+            aspect-ratio: 3/2;
+            object-fit: cover;
+        }
+
+        .grid3 {
+            padding-top: 10px;
+            display: grid;
+            grid-template-columns: 33% 33% 33%;
+            gap: 10px;
+        }
+
+        .blow {
+            /* padding: 10px; */
+
+            /* grid-column-start: 3; */
+            width: 100%;
+            aspect-ratio: 3/2;
+            object-fit: cover;
+        }
