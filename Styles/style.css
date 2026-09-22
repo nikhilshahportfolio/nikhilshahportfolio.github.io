@@ -22,7 +22,7 @@
             min-height: 600px;
         }
 
-        .paper h2{
+        .paper h4 {
             padding-top: 25px;
         }
 
@@ -45,6 +45,10 @@
             align-items: center;
             gap: 150px;
             font-size: 12px;
+        }
+
+        header ul li:hover {
+            text-decoration: dashed
         }
 
         header ul li:nth-child(2) {
@@ -137,6 +141,22 @@
 
             font-size: 9px;
             font-weight: 600;
+        }
+
+        .contact-button {
+            display: inline-block;
+            margin-top: 10px;
+
+            color: #4A4238;
+            text-decoration: dashed ;
+
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .contact-button:hover {
+
+            text-decoration: underline;
         }
 
         .project-button:hover {
