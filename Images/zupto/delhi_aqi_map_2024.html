@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Delhi AQI + Dark Stores 2024</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: #fff; color: #111; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
+
+#header {
+  padding: 9px 14px;
+  background: #fff;
+  border-bottom: 1px solid #e2e2e2;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+}
+#header h1 { font-size: 13px; font-weight: 700; color: #111; white-space: nowrap; }
+.badge { font-size: 10px; background: #c0392b; color: #fff; padding: 2px 7px; border-radius: 3px; font-weight: 700; }
+.badge2 { font-size: 10px; background: #1a1a2e; color: #fff; padding: 2px 7px; border-radius: 3px; font-weight: 700; }
+.sub { font-size: 11px; color: #999; }
+
+#legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-left: auto; align-items: center; }
+.leg { display: flex; align-items: center; gap: 5px; font-size: 10.5px; color: #555; white-space: nowrap; }
+.ld-grad { width: 52px; height: 11px; border-radius: 2px; background: linear-gradient(to right, #dca000, #d25000, #c8140a, #8c0000); }
+.ld-store { width: 14px; height: 14px; background: #1a1a2e; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 9px; }
+
+#controls { display: flex; align-items: center; gap: 8px; }
+#controls label { font-size: 11px; color: #888; }
+#opSlider { width: 60px; accent-color: #c0392b; cursor: pointer; }
+
+#map { flex: 1; }
+
+/* Store icon */
+.store-icon {
+  background: #1a1a2e;
+  border: 2px solid #fff;
+  border-radius: 6px;
+  width: 26px; height: 26px;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.store-icon:hover { transform: scale(1.15); }
+.store-icon svg { width: 14px; height: 14px; }
+
+/* Popup */
+.store-popup { font-family: 'Segoe UI', sans-serif; min-width: 160px; }
+.sp-name { font-size: 12px; font-weight: 700; color: #111; margin-bottom: 3px; }
+.sp-area { font-size: 10px; color: #888; }
+.sp-aqi  { font-size: 11px; margin-top: 6px; padding-top: 5px; border-top: 1px solid #eee; }
+.sp-aqi b { font-weight: 700; }
+
+.aqi-popup { font-family: 'Segoe UI', sans-serif; min-width: 175px; }
+.popup-name { font-size: 13px; font-weight: 700; color: #111; margin-bottom: 4px; }
+.popup-aqi  { font-size: 32px; font-weight: 800; line-height: 1; letter-spacing: -1px; }
+.popup-cat  { font-size: 11px; font-weight: 800; margin-top: 3px; text-transform: uppercase; letter-spacing: 0.05em; }
+.popup-month { font-size: 11px; color: #666; margin-top: 4px; }
+.popup-bar  { margin: 8px 0 3px; height: 5px; border-radius: 3px; background: #eee; }
+.popup-bar-fill { height: 100%; border-radius: 3px; }
+.popup-meta { font-size: 10px; color: #999; border-top: 1px solid #eee; margin-top: 6px; padding-top: 5px; line-height: 1.7; }
+.popup-yr { display:inline-block; font-size:9px; background:#fff3cd; color:#856404; border-radius:3px; padding:1px 5px; margin-top:2px; }
+</style>
+</head>
+<body>
+
+<div id="header">
+  <h1>Delhi AQI + Dark Stores</h1>
+  <span class="badge">WORST MONTH 2024</span>
+  <span class="badge2">77 DARK STORES</span>
+  <span class="sub">Interpolated air quality · click markers for details</span>
+  <div id="controls">
+    <label>AQI opacity</label>
+    <input type="range" id="opSlider" min="0.10" max="0.95" step="0.05" value="0.75">
+  </div>
+  <div id="legend">
+    <div class="leg"><div class="ld-grad"></div>Low → High AQI</div>
+    <div class="leg">
+      <div class="ld-store">
+        <svg viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="1" y="5" width="12" height="8" rx="1" fill="#fff" opacity="0.9"/>
+          <path d="M1 5 L3 2 H11 L13 5" stroke="#fff" stroke-width="1" fill="none" opacity="0.9"/>
+          <rect x="5" y="8" width="4" height="5" rx="0.5" fill="#1a1a2e"/>
+          <rect x="5.5" y="5.5" width="3" height="2" rx="0.3" fill="#f1c40f" opacity="0.8"/>
+        </svg>
+      </div>
+      Dark Store
+    </div>
+  </div>
+</div>
+
+<div id="map"></div>
+
+<script>
+// ── AQI color helpers ────────────────────────────────────────────────────────
+function aqiToRgb(aqi) {
+  const v = Math.max(100, Math.min(420, aqi));
+  const stops = [
+    [100, [220, 160,  0]],   // deep amber
+    [200, [210,  80,  0]],   // burnt orange
+    [280, [200,  20, 10]],   // vivid red
+    [340, [140,   0,  0]],   // deep red
+    [400, [ 80,   0,  0]],   // dark crimson
+    [420, [ 40,   0,  0]],   // near black-red
+  ];
+  for (let i = 0; i < stops.length-1; i++) {
+    const [a,ca] = stops[i], [b,cb] = stops[i+1];
+    if (v >= a && v <= b) {
+      const t = (v-a)/(b-a);
+      return ca.map((c,j) => Math.round(c + t*(cb[j]-c)));
+    }
+  }
+  return stops[stops.length-1][1];
+}
+function aqiColor(aqi) {
+  if (!aqi) return '#bbb';
+  const [r,g,b] = aqiToRgb(aqi);
+  return `rgb(${r},${g},${b})`;
+}
+function aqiCat(aqi) {
+  if (!aqi) return 'No data';
+  if (aqi<=50) return 'Good';
+  if (aqi<=100) return 'Satisfactory';
+  if (aqi<=200) return 'Moderate';
+  if (aqi<=300) return 'Poor';
+  if (aqi<=400) return 'Very Poor';
+  return 'Severe';
+}
+
+// ── AQI Stations ─────────────────────────────────────────────────────────────
+const AQI_STATIONS = [
+  ["Jahangirpuri",         28.7329, 77.1636, 379.6, "November", "DPCC",   "North Delhi",              2024],
+  ["Bawana",               28.7781, 77.0394, 378.8, "November", "DPCC",   "North-West Industrial",    2024],
+  ["Mundka",               28.6836, 77.0329, 374.3, "November", "DPCC",   "West Delhi Industrial",    2024],
+  ["Rohini",               28.7358, 77.1174, 370.4, "November", "DPCC",   "North-West Delhi",         2024],
+  ["Ashok Vihar",          28.6953, 77.1813, 369.8, "November", "DPCC",   "North-Central Delhi",      2024],
+  ["Nehru Nagar",          28.5686, 77.2496, 368.8, "January",  "DPCC",   "South-East Delhi",         2024],
+  ["Anand Vihar",          28.6469, 77.3152, 368.0, "November", "DPCC",   "East Delhi",               2024],
+  ["Wazirpur",             28.7001, 77.1637, 366.9, "November", "DPCC",   "North-Central Industrial", 2024],
+  ["Punjabi Bagh",         28.6663, 77.1317, 366.4, "November", "DPCC",   "West-Central Delhi",       2024],
+  ["Vivek Vihar",          28.6719, 77.3150, 357.7, "November", "DPCC",   "East Delhi",               2024],
+  ["Patparganj",           28.6243, 77.2949, 357.3, "November", "DPCC",   "East Delhi",               2024],
+  ["R K Puram",            28.5644, 77.1790, 356.6, "January",  "DPCC",   "South Delhi",              2024],
+  ["Shadipur",             28.6498, 77.1487, 350.9, "November", "CPCB",   "Central Delhi",            2024],
+  ["Sonia Vihar",          28.7157, 77.2638, 348.1, "November", "DPCC",   "North-East Delhi",         2024],
+  ["Narela",               28.8547, 77.0922, 343.0, "November", "DPCC",   "North Delhi",              2024],
+  ["Alipur",               28.8422, 77.1339, 342.9, "November", "DPCC",   "Far North Delhi",          2024],
+  ["Okhla Phase-2",        28.5359, 77.2674, 342.4, "January",  "DPCC",   "South-East Delhi",         2024],
+  ["Dwarka Sector-8",      28.5831, 77.0637, 338.6, "November", "DPCC",   "South-West Delhi",         2023],
+  ["Sri Aurobindo Marg",   28.5266, 77.2073, 335.5, "January",  "DPCC",   "South Delhi",              2024],
+  ["Sirifort",             28.5508, 77.2171, 334.7, "January",  "CPCB",   "South Delhi",              2024],
+  ["MD Chand Stadium",     28.6070, 77.2390, 333.4, "November", "DPCC",   "Central-South Delhi",      2024],
+  ["Dr Karni Singh Range", 28.6117, 77.3095, 332.7, "November", "DPCC",   "South-East Delhi",         2024],
+  ["Mandir Marg",          28.6353, 77.2010, 329.8, "November", "DPCC",   "Central Delhi",            2024],
+  ["NSIT Dwarka",          28.6075, 77.0340, 328.3, "November", "CPCB",   "South-West Delhi",         2024],
+  ["Pusa",                 28.6381, 77.1557, 319.6, "November", "DPCC",   "Central Delhi",            2024],
+  ["JN Stadium",           28.5874, 77.2381, 320.5, "January",  "DPCC",   "South-Central Delhi",      2024],
+  ["Najafgarh",            28.6092, 76.9795, 315.4, "November", "DPCC",   "Far South-West Delhi",     2024],
+  ["North Campus DU",      28.6880, 77.2073, 311.9, "November", "IMD",    "Central-North Delhi",      2024],
+  ["Burari Crossing",      28.7280, 77.2110, 307.5, "November", "IMD",    "North-East Delhi",         2024],
+  ["Aya Nagar",            28.4756, 77.1002, 304.8, "November", "IMD",    "Far South Delhi",          2024],
+  ["ITO",                  28.6286, 77.2435, 302.8, "November", "CPCB",   "Central Delhi",            2024],
+  ["DTU",                  28.7496, 77.1183, 302.6, "November", "CPCB",   "North Delhi",              2024],
+  ["IGI Airport T3",       28.5562, 77.0999, 301.0, "November", "IMD",    "South-West (Airport)",     2024],
+  ["IHBAS Dilshad Garden", 28.6800, 77.3200, 296.4, "November", "CPCB",   "East Delhi",               2024],
+  ["CRRI Mathura Road",    28.5497, 77.2761, 288.6, "November", "IMD",    "South-East Delhi",         2024],
+  ["Chandni Chowk",        28.6562, 77.2286, 281.2, "November", "IITM",   "Old Delhi / Central",      2024],
+  ["Lodhi Road",           28.5921, 77.2234, 218.4, "November", "IMD/IITM","South-Central Delhi",     2024],
+];
+
+// ── Dark Stores ───────────────────────────────────────────────────────────────
+const STORES = [
+  ["DEL-VASANT KUNJ",              28.5200, 77.1570],
+  ["DEL-Vasant Kunj 2",            28.5150, 77.1520],
+  ["DEL-Kalkaji Network",          28.5494, 77.2592],
+  ["DEL-Malviya Nagar Network",    28.5320, 77.2100],
+  ["DEL-MALVIYA NAGAR NEW",        28.5280, 77.2080],
+  ["DEL-Mahipalpur",               28.5340, 77.1160],
+  ["DEL-Sarita Vihar",             28.5256, 77.2910],
+  ["DEL-Dwarka Sector 10 Network-4",28.5780,77.0590],
+  ["DEL-Munirka",                  28.5560, 77.1720],
+  ["DEL-Kalkaji New",              28.5450, 77.2620],
+  ["DEL-JASOLA VIHAR",             28.5460, 77.2990],
+  ["DEL-South Extension Network",  28.5680, 77.2240],
+  ["DEL-East of Kailash",          28.5530, 77.2480],
+  ["NOD-Sector 46 Network",        28.5700, 77.3620],
+  ["DEL-RK PURAM",                 28.5644, 77.1790],
+  ["DEL-South Extension New",      28.5660, 77.2210],
+  ["DEL-East Of Kailash Network",  28.5510, 77.2500],
+  ["DEL-Khizrabad",                28.5620, 77.2310],
+  ["Del-Dwarka Sector 19",         28.5980, 77.0410],
+  ["DEL-Bagdola",                  28.6010, 77.0220],
+  ["DEL-Krishna Market",           28.6430, 77.2150],
+  ["DEL-Jangpura",                 28.5900, 77.2460],
+  ["NOD-Sector-31",                28.5750, 77.3450],
+  ["DEL-Dwarka Sector 10 New",     28.5790, 77.0600],
+  ["NOD-Sector 4",                 28.5840, 77.3260],
+  ["DEL-Dwarka Sec 17",            28.5960, 77.0480],
+  ["DEL-Mahavir Enclave Network",  28.6040, 77.0560],
+  ["DEL-Trilokpuri",               28.6180, 77.3050],
+  ["NOD-Sector-10 New",            28.5780, 77.3340],
+  ["DEL-Najafgarh",                28.6092, 76.9795],
+  ["DEL-Dwarka Sector 12 Network", 28.5850, 77.0520],
+  ["DEL-Rajapuri",                 28.6230, 77.0590],
+  ["DEL-MAHAVIR ENCLAVE",          28.6050, 77.0570],
+  ["DEL-UTTAM NAGAR NETWORK",      28.6210, 77.0660],
+  ["DEL-Uttam Nagar New",          28.6190, 77.0700],
+  ["DEL-MAYUR VIHAR",              28.6080, 77.2940],
+  ["DEL-Kondli",                   28.6190, 77.3150],
+  ["DEL-JANAKPURI",                28.6310, 77.0820],
+  ["DEL-Mayapuri",                 28.6410, 77.1130],
+  ["DEL-IP EXTENSION",             28.6380, 77.3080],
+  ["DEL-Rajapur Khurd",            28.6260, 77.0750],
+  ["DEL-Vikaspuri",                28.6390, 77.0730],
+  ["DEL-Janakpuri Network",        28.6290, 77.0800],
+  ["DEL-RAJOURI GARDEN NEW",       28.6490, 77.1220],
+  ["DEL-KIRTI NAGAR NETWORK",      28.6530, 77.1530],
+  ["DEL-KIRTI NAGAR",              28.6520, 77.1510],
+  ["DEL-Connaught Place",          28.6315, 77.2167],
+  ["DEL-ANAND VIHAR",              28.6469, 77.3152],
+  ["GZB-Gyan Khand",               28.6390, 77.3650],
+  ["DEL-Keshopur",                 28.6620, 77.1000],
+  ["DEL-Janta Market",             28.6580, 77.1870],
+  ["DEL-East Patel Nagar",         28.6500, 77.1740],
+  ["DEL-Karol Bagh Main New",      28.6520, 77.1905],
+  ["DEL-Nirman Vihar",             28.6440, 77.2960],
+  ["GZB-VAISHALI",                 28.6450, 77.3410],
+  ["DEL-Rajauri Garden Network",   28.6480, 77.1200],
+  ["DEL-KAROL BAGH",               28.6510, 77.1920],
+  ["DEL-Anand Vihar Network",      28.6460, 77.3140],
+  ["DEL-Nangloi",                  28.6720, 77.0590],
+  ["DEL-Paschim Vihar",            28.6680, 77.1040],
+  ["DEL-Kirti Nagar Network-2",    28.6540, 77.1540],
+  ["GZB-Sahibabad New",            28.6680, 77.3580],
+  ["DEL-Nangloi Extension",        28.6750, 77.0510],
+  ["DEL-SHAKTI NAGAR",             28.6760, 77.2000],
+  ["DEL-Dilshad Garden New",       28.6820, 77.3120],
+  ["DEL-PITAMPURA NEW",            28.7020, 77.1310],
+  ["DEL-WAZIRPUR",                 28.7001, 77.1637],
+  ["DEL-Shahdara",                 28.6700, 77.2880],
+  ["DEL-Durgapuri",                28.6750, 77.3040],
+  ["GZB-Shyam Park",               28.6610, 77.3780],
+  ["DEL-Vijay Vihar Phase 2",      28.7050, 77.0960],
+  ["DEL-ROHINI SECTOR 3",          28.7180, 77.1230],
+  ["DEL-Kalyan Vihar",             28.7120, 77.1960],
+  ["GZB-Gagan Vihar",              28.6550, 77.3500],
+  ["DEL-Rohini Sector 21",         28.7350, 77.1060],
+  ["DEL-Pitampura network",        28.6980, 77.1280],
+  ["DEL-Model Town Network",       28.7050, 77.1900],
+];
+
+// ── Map ───────────────────────────────────────────────────────────────────────
+const map = L.map('map', { zoomControl: true }).setView([28.620, 77.17], 11);
+// Try tile providers in order until one loads
+const tileProviders = [
+  {
+    url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    attr: '© <a href="https://openstreetmap.org">OpenStreetMap</a>'
+  },
+  {
+    url: 'https://tile.openstreetmap.de/{z}/{x}/{y}.png',
+    attr: '© <a href="https://openstreetmap.org">OpenStreetMap</a>'
+  },
+  {
+    url: 'https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}.png',
+    attr: '© <a href="https://stadiamaps.com">Stadia Maps</a>'
+  },
+];
+
+let tileLayer = L.tileLayer(tileProviders[0].url, {
+  maxZoom: 19, attribution: tileProviders[0].attr
+}).addTo(map);
+
+// Auto-fallback if tiles fail to load
+let fallbackIdx = 0;
+tileLayer.on('tileerror', function() {
+  fallbackIdx++;
+  if (fallbackIdx < tileProviders.length) {
+    map.removeLayer(tileLayer);
+    tileLayer = L.tileLayer(tileProviders[fallbackIdx].url, {
+      maxZoom: 19, attribution: tileProviders[fallbackIdx].attr
+    }).addTo(map);
+  }
+});
+
+// ── AQI heatmap layer ─────────────────────────────────────────────────────────
+const AQILayer = L.Layer.extend({
+  onAdd(map) {
+    this._map = map;
+    const pane = map.getPane('overlayPane');
+    this._canvas = document.createElement('canvas');
+    this._canvas.style.cssText = 'position:absolute;pointer-events:none;image-rendering:auto;';
+    pane.appendChild(this._canvas);
+    map.on('moveend zoomend resize', this._redraw, this);
+    this._redraw();
+  },
+  onRemove(map) {
+    this._canvas.remove();
+    map.off('moveend zoomend resize', this._redraw, this);
+  },
+  setOpacity(v) {
+    this._opacity = v;
+    if (this._canvas) this._canvas.style.opacity = v;
+  },
+  _redraw() {
+    const map = this._map;
+    const size = map.getSize();
+    const W = size.x, H = size.y;
+    this._canvas.width = W; this._canvas.height = H;
+    const tl = map.containerPointToLayerPoint([0,0]);
+    L.DomUtil.setPosition(this._canvas, tl);
+    const ctx = this._canvas.getContext('2d');
+    const img = ctx.createImageData(W, H);
+    const d = img.data;
+
+    const SCALE = 3;
+    const GW = Math.ceil(W/SCALE), GH = Math.ceil(H/SCALE);
+    const grid = new Float32Array(GW*GH);
+    const stPx = AQI_STATIONS.map(s => {
+      const pt = map.latLngToContainerPoint([s[1], s[2]]);
+      return { x: pt.x, y: pt.y, aqi: s[3] };
+    });
+    const POWER = 2.8;
+    for (let gy=0; gy<GH; gy++) {
+      for (let gx=0; gx<GW; gx++) {
+        const px=gx*SCALE+SCALE/2, py=gy*SCALE+SCALE/2;
+        let wSum=0, vSum=0;
+        for (const st of stPx) {
+          const dx=px-st.x, dy=py-st.y, dist2=dx*dx+dy*dy;
+          if (dist2<1) { vSum=st.aqi; wSum=1; break; }
+          const w=1/Math.pow(dist2, POWER/2);
+          wSum+=w; vSum+=w*st.aqi;
+        }
+        grid[gy*GW+gx]=vSum/wSum;
+      }
+    }
+    for (let py=0; py<H; py++) {
+      for (let px=0; px<W; px++) {
+        const gxf=px/SCALE-.5, gyf=py/SCALE-.5;
+        const gx0=Math.max(0,Math.floor(gxf)), gy0=Math.max(0,Math.floor(gyf));
+        const gx1=Math.min(GW-1,gx0+1), gy1=Math.min(GH-1,gy0+1);
+        const tx=gxf-gx0, ty=gyf-gy0;
+        const aqi = grid[gy0*GW+gx0]*(1-tx)*(1-ty)+grid[gy0*GW+gx1]*tx*(1-ty)+grid[gy1*GW+gx0]*(1-tx)*ty+grid[gy1*GW+gx1]*tx*ty;
+        const [r,g,b]=aqiToRgb(aqi);
+        const i=(py*W+px)*4;
+        d[i]=r; d[i+1]=g; d[i+2]=b; d[i+3]=255;
+      }
+    }
+    ctx.putImageData(img,0,0);
+    this._canvas.style.filter='blur(16px)';
+    this._canvas.style.opacity=this._opacity||0.75;
+  }
+});
+
+const aqiLayer = new AQILayer();
+aqiLayer.addTo(map);
+
+// ── AQI station dots ──────────────────────────────────────────────────────────
+AQI_STATIONS.forEach(s => {
+  const color = aqiColor(s[3]);
+  const barW  = Math.min(100, Math.round(s[3]/5));
+  const popup = `<div class="aqi-popup">
+    <div class="popup-name">📡 ${s[0]}</div>
+    <div class="popup-aqi" style="color:${color}">${s[3]}</div>
+    <div class="popup-cat" style="color:${color}">${aqiCat(s[3])}</div>
+    <div class="popup-month">📅 Peak: <b>${s[4]}</b> · ${s[7]} data</div>
+    <div class="popup-bar"><div class="popup-bar-fill" style="width:${barW}%;background:${color}"></div></div>
+    <div class="popup-meta">Agency: ${s[5]} · ${s[6]}
+      ${s[7]===2023?'<br><span class="popup-yr">⚠ 2023 data</span>':''}
+    </div>
+  </div>`;
+  L.circleMarker([s[1],s[2]], {
+    radius:5, fillColor:color, fillOpacity:0.9,
+    color:'#fff', weight:1.5,
+  }).bindPopup(popup, {maxWidth:250}).addTo(map);
+});
+
+// ── Store SVG icon ────────────────────────────────────────────────────────────
+// A small dark-store / shop building SVG
+const storeSVG = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width="16" height="16">
+  <rect x="2" y="9" width="16" height="10" rx="1" fill="white" opacity="0.95"/>
+  <path d="M1 9 L4 3 H16 L19 9Z" fill="white" opacity="0.95"/>
+  <rect x="7.5" y="12" width="5" height="7" rx="0.5" fill="#1a1a2e"/>
+  <rect x="3" y="10.5" width="4" height="3" rx="0.5" fill="#f1c40f" opacity="0.85"/>
+  <rect x="13" y="10.5" width="4" height="3" rx="0.5" fill="#f1c40f" opacity="0.85"/>
+  <line x1="10" y1="3" x2="10" y2="9" stroke="#1a1a2e" stroke-width="0.5" opacity="0.3"/>
+</svg>`;
+
+// Helper: get nearest AQI station value for a store location
+function getNearestAQI(lat, lng) {
+  let best = null, bestDist = Infinity;
+  for (const s of AQI_STATIONS) {
+    const dlat = (lat-s[1])*111, dlng = (lng-s[2])*111*Math.cos(lat*Math.PI/180);
+    const d = dlat*dlat + dlng*dlng;
+    if (d < bestDist) { bestDist=d; best=s; }
+  }
+  return best;
+}
+
+// ── Plot stores ───────────────────────────────────────────────────────────────
+STORES.forEach(store => {
+  const [name, lat, lng] = store;
+  const nearest = getNearestAQI(lat, lng);
+  const aqi     = nearest ? nearest[3] : null;
+  const color   = aqiColor(aqi);
+  const area    = name.replace(/^(DEL|NOD|GZB)-/,'');
+  const zone    = name.startsWith('NOD') ? 'Noida' : name.startsWith('GZB') ? 'Ghaziabad' : 'Delhi';
+
+  const icon = L.divIcon({
+    className: '',
+    html: `<div class="store-icon" title="${name}">${storeSVG}</div>`,
+    iconSize:   [26, 26],
+    iconAnchor: [13, 13],
+    popupAnchor:[0, -16],
+  });
+
+  const barW = aqi ? Math.min(100, Math.round(aqi/5)) : 0;
+  const popup = `<div class="store-popup">
+    <div class="sp-name">🏪 ${area}</div>
+    <div class="sp-area">${zone} · Dark Store</div>
+    ${aqi ? `<div class="sp-aqi">
+      Nearest AQI station: <b>${nearest[0]}</b><br>
+      Peak AQI: <b style="color:${color}">${aqi}</b> — ${aqiCat(aqi)}<br>
+      Peak month: ${nearest[4]}
+      <div class="popup-bar" style="margin-top:5px"><div class="popup-bar-fill" style="width:${barW}%;background:${color}"></div></div>
+    </div>` : ''}
+  </div>`;
+
+  L.marker([lat, lng], { icon, zIndexOffset: 1000 })
+    .bindPopup(popup, { maxWidth: 230 })
+    .addTo(map);
+});
+
+// ── Opacity slider ────────────────────────────────────────────────────────────
+document.getElementById('opSlider').addEventListener('input', function() {
+  aqiLayer.setOpacity(parseFloat(this.value));
+});
+</script>
+</body>
+</html>

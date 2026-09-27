@@ -112,111 +112,94 @@
     </div>
 
 
-        <p><i>A boy sneaks into the kitchen to find his spinning top.</i></p>
-    <img src="/Images/Gharjohumpichechhodaaye/1.png" class="ghar-hero">
-    <p>He playfully roams around the kitchen and opens the boxes and blows in the <i>chulha</i> with the <i>fukni</i>.
-      He wants to play with his <i>lattu</i>, but it is lost in the kitchen.</p>
-    <p><i>Ghar Jo Hum Piche Chhod Aaye</i> lets you inhabit the body of a child on the day of the Partition. The kitchen
-      was a deliberate choice — it's a space that talks to all your senses at once. The smell of the <i>chulha</i>, the
-      weight of the <i>dabbas</i>, the sound of the fire. You blow into the <i>chulha</i> with a <i>fukni</i>, open the
-      <i>dabbas</i>, poke around. Somewhere in here, your <i>lattu</i> is hidden — and you want it.
+    <p>an average gig worker spends 8 to 12 hours a day outside — exposed, on a two-wheeler, breathing whatever the city
+      is breathing. and in Delhi, what the city is breathing is the worst air in the world.</p>
+    <p>the government knows. the companies know. but they have no reason to move until the people who use these apps
+      start asking questions.</p>
+    <p>so we targeted users — not because they are the most guilty, but because they are the most powerful. these
+      companies exist to serve them. if users become aware and uncomfortable, the companies have no choice but to
+      respond. </p>
+
+    <p>we chose a dummy app as the medium — because it's the easiest thing to onboard someone into. they think they know
+      what they're doing. that assumption is the bait. the guilt trip comes after.</p>
+
+    <p>we divided the concept into two things-</p>
+    <!-- <p><b>+ Provocation</b> </p>
+    <p><b>+ Data visualisation</b> </p> -->
+
+    <!-- <div class="protitle">
+    <p class="paraleft"><b>+ Provocation</b> </p>
+    <p class="pararight"><b>+ Provocation</b> </p>
+
+    </div> -->
+    <h4>1. Data visualisation</h4>
+    <p>we pulled data from CPCB's AQI monitoring stations and mapped it against the locations of dark stores across
+      Delhi — the warehouses gig workers spend most of their time around, picking up and dropping off orders.</p>
+    <p>the finding was uncomfortable: most dark stores sit in the most crowded parts of the city. crowded areas drive
+      more demand, more demand means more dark stores, more dark stores mean more congestion — and more pollution.</p>
+
+
+    <iframe src="Images/zupto/delhi_aqi_map_2024.html" width="100%" height="500px" style="border:none;"></iframe>
+
+    <p>The map takes about 40 datasets, selects the highest AQI month, November, and presents it as a continuous color
+      field over a live street map.
     </p>
-    <div class="slideshow-wrapper">
-      <div class="slideshow" id="slideshow">
-        <img src="/Images/Gharjohumpichechhodaaye/ghara.png">
-
-        <img src="/Images/Gharjohumpichechhodaaye/gharb.png">
-
-        <img src="/Images/Gharjohumpichechhodaaye/gharc.png">
-
-        <img src="/Images/Gharjohumpichechhodaaye/ghard.png">
-
-        <img src="/Images/Gharjohumpichechhodaaye/ghare.png">
-
-        <img src="/Images/Gharjohumpichechhodaaye/gharef.png">
-      </div>
-      <div class="arrows">
-        <button onclick="slide(-1)">←</button>
-        <button onclick="slide(1)">→</button>
-      </div>
-    </div>
-    <p>Most stories of Partition come through memories — violence, loss, the weight of understanding what happened. We
-      wanted to ask a different question: what was a child doing that day? A child who didn't know. Who was just in the
-      kitchen, looking for his toy.</p>
-    <p>Outside, something is happening. You have no idea about it. You're looking for your toy.
+    <p>Zones were originally divided using Voronoi diagrams, with each location on the map allocated to its nearest
+      monitoring station, resulting in zone boundaries that lay exactly in the middle of two stations.
+      However, as a last step, we employed a heatmap, which is a better approach to represent anything in the air. It
+      cannot be separated by borders.
     </p>
-    <div class="lattuchulha">
-      <img src="/Images/Gharjohumpichechhodaaye/3.jpg" alt="an image of chulha"
+
+    <p>using November's peak instead of a yearly average pushed the numbers from a forgettable 180 to the 300–380 Very
+      Poor range. that's the air a rider breathes for 8 to 12 hours, every winter, every day.
+    </p>
+
+    <h4>2. Provocation</h4>
+
+
+    <p>we replicated Zepto's UI exactly — same layout, same visual language, same checkout flow.</p>
+
+    <img src="Images/zupto/Shot(1).png" class="ghar-hero">
+    <p>but at every stage of the app, something is slightly different.</p>
+    <img src="Images/zupto/Shot(3).png" class="ghar-hero">
+
+    <p>the address selection screen shows you the AQI of your delivery zone. most users don't know what kind of air
+      they're living inside — this puts it in front of them, unavoidably.</p>
+       <div class="lattuchulha">
+      <img src="Images/zupto/Shot.png" alt="an image of chulha"
         class="chulha">
 
-      <img src="/Images/Gharjohumpichechhodaaye/Chulha_split.gif" alt="Chulha_split"
-        class="lattu">
-
-      <img src="/Images/Gharjohumpichechhodaaye/4.jpg"
-        alt="an image of lattu hiding between dabbas" class="chulha">
-
-      <img src="/Images/Gharjohumpichechhodaaye/lattu_split.gif" alt="lattu_split"
+      <img src="Images/zupto/Shot(2).png" alt="Chulha_split"
         class="lattu">
 
     </div>
+    <p>your delivery time is not 10 minutes. it's hours — because in a high AQI zone, your rider is taking a longer
+      route to avoid the most polluted corridors. you can bring that time down, but only if you purchase protective
+      equipment for the rider.</p>
+    <p>[Loading screen]</p>
+    <U> <p>your delivery time is not 10 minutes. it's hours — because in a high AQI zone, your rider is taking a longer
+      route to avoid the most polluted corridors. you can bring that time down, but only if you purchase protective
+      equipment for the rider.</p></U>
 
-    <p>After forming the narrative we started getting our hands dirty — figuring out how to transfer parameters from
-      actual fire into Unity so the interaction could respond. We tried a flame sensor first to capture real heat.
-      Irregular readings, didn't work. Then we switched to a CO sensor — it recognised breath. You might wonder why not
-      CO2 — we tried, but it wasn't sensitive enough. CO worked.</p>
+    <img src="Images/zupto/Shot(4).png" class="ghar-hero">
+    <br>
+    <img src="Images/zupto/Shot(5).png" class="ghar-hero"><br>
+    <img src="Images/zupto/Shot(6).png" class="ghar-hero"><br>
 
 
-    <div class="lattuchulha">
-      <img src="/Images/Gharjohumpichechhodaaye/1test.png" alt="an image of chulha"
-        class="chulha">
 
-      <img src="/Images/Gharjohumpichechhodaaye/2test.png" alt="Chulha_split"
-        class="lattu">
-    </div>
-
-    <div class="grid3">
-      <img src="/Images/Gharjohumpichechhodaaye/test3.png" alt="an image of chulha"
-        class="chulha">
-
-      <img src="/Images/Gharjohumpichechhodaaye/test2.png" alt="Chulha_split"
-        class="lattu">
-
-      <img src="/Images/Gharjohumpichechhodaaye/test1.png" alt="Chulha_split" class="blow">
-    </div>
-
-    <p>After forming the narrative we started getting our hands dirty — figuring out how to transfer parameters from
-      actual fire into Unity so the interaction could respond. We tried a flame sensor first to capture real heat.
-      Irregular readings, didn't work. Then we switched to a CO sensor — it recognised breath. You might wonder why not
-      CO2 — we tried, but it wasn't sensitive enough. CO worked.</p>
-
-    <p>Simultaneously we were modelling the space in Blender — geometry, textures, lighting — and then bringing it into
-      Unity for interaction and sound design.</p>
+    <p>tapping a coupon doesn't give you a discount. one shows how many hours a rider is exposed to toxic air in a year. the other opens infographics on airborne diseases — scientifically documented, unglamorous, real. nobody wants to read it. that's the point.</p>
+    
+    <p>before you place your order, there's one more thing on the bill. a health tax — ₹29 on average. but it doesn't sit as one number. it explodes into a long scroll — every disease a rider is likely developing from years of breathing Delhi's air, each one assigned a fraction of the rupee. PM2.5. benzene. carbon monoxide. the diseases they cause. you have to scroll through all of it to place your order.</p>
+    <p>it's not accurate. it was never meant to be. the point is the scroll — the weight of the list, the realisation that ₹29 cannot actually cover any of this.</p>
 
 
 
 
 
 
-    <img src="/Images/Gharjohumpichechhodaaye/timelapse.gif"
-      alt="timelapse of spacebuilding" class="ghar-hero">
 
-    <div class="grid3">
-      <img src="/Images/Gharjohumpichechhodaaye/cropa.jpg" alt="an image of chulha"
-        class="chulha">
 
-      <img src="/Images/Gharjohumpichechhodaaye/cropc.jpg" alt="Chulha_split"
-        class="lattu">
-
-      <img src="/Images/Gharjohumpichechhodaaye/cropk.jpg" alt="Chulha_split" class="blow">
-    </div>
-    <p>For the physical space, we put up black curtains around a square enclosure — to cut out light and trap heat
-      inside, replicating something close to a kitchen. We built a small chimney to let the smoke out. The tables and
-      objects were placed according to the height of a child, so the space felt large and just out of reach. We then
-      mapped this physical space to the VR environment — every object at the same coordinates in both worlds, so your
-      body and the child's perspective occupy the same point in space.</p>
-
-    <p>Projection mapping let the audience see what was happening inside the VR — the physical and virtual space running
-      together in the same room.</p>
 
     <div class="protitle">
 
