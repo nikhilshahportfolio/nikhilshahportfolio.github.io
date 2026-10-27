@@ -1,3 +1,70 @@
+html { scroll-behavior: smooth; }
+
+.side-nav {
+    position: fixed;
+    top: 50%;
+    right: 24px;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.side-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.side-nav a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: grey;
+    text-decoration: none;
+    font-size: 9px;
+}
+
+.side-nav-label {
+    opacity: 0;
+    transform: translateX(4px);
+    transition: opacity .25s, transform .25s;
+    white-space: nowrap;
+}
+
+.side-nav-tick {
+    display: block;
+    width: 12px;
+    height: 1px;
+    background: grey;
+    transition: width .25s, background .25s;
+}
+
+.side-nav a:hover .side-nav-label,
+.side-nav a:focus-visible .side-nav-label {
+    opacity: 1;
+    transform: none;
+}
+
+.side-nav a.is-active { color: #4A4238; }
+.side-nav a.is-active .side-nav-tick { width: 26px; background: #4A4238; }
+
+/* sub-items (like "ideation" under a project) get a shorter tick */
+.side-nav li.is-sub .side-nav-tick { width: 6px; }
+.side-nav li.is-sub a.is-active .side-nav-tick { width: 18px; }
+
+/* on wide screens the active label stays visible */
+@media (min-width: 1300px) {
+    .side-nav a.is-active .side-nav-label { opacity: 1; transform: none; }
+}
+
+/* too narrow, it would sit on top of the yellow page */
+@media (max-width: 900px) {
+    .side-nav { display: none; }
+}
+
 body {
     margin: 0;
     font-family: "Open Sans", sans-serif;
@@ -7,6 +74,21 @@ body {
 
 .navbar {
     padding-top: 20px;
+}
+
+.live-clock {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 10px;
+    color: grey;
+    margin-top: 14px;
+}
+
+.clock-line {
+    flex: 1;
+    height: 1px;
+    background: fff8e6
 }
 
 .paper {
@@ -30,16 +112,9 @@ header ul {
     margin: 0;
     display: flex;
     align-items: center;
-    gap: 150px;
+    justify-content: space-between;
+    gap: 16px;
     font-size: 12px;
-}
-
-header ul li:nth-child(2) {
-    margin-left: auto;
-}
-
-header ul li:not(:first-child) {
-    margin-left: 1px;
 }
 
 header ul li a {
@@ -305,8 +380,8 @@ iframe {
 
 .signature {
     padding-left: 280px;
-    padding-top:80px;    
-    opacity:80%;
+    padding-top: 80px;
+    opacity: 80%;
     width: 60%;
     height: auto;
     display: block;
