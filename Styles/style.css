@@ -754,3 +754,320 @@ body.lab-locked {
         transition-delay: 0s !important;
     }
 }
+
+/* ═══════════════════════════════════════════════
+   DESIGN TOKENS + CASE STUDY LAYOUT (portfolio rework)
+   appended at the bottom, nothing above is changed.
+   case study pages opt in with: <section class="project-card-casestudy cs">
+═══════════════════════════════════════════════ */
+
+:root {
+    --paper: #fff8e6;
+    --ink: #2d2822;
+    --ink-soft: #4A4238;
+    --dark: #1E212B;
+    --muted: grey;
+    --gutter: 140px;   /* left column: headings + captions */
+    --gap: 24px;
+}
+
+/* a row = one section. no lines: big empty space separates sections, heading in left column */
+.cs-row {
+    display: grid;
+    grid-template-columns: var(--gutter) 1fr;
+    column-gap: var(--gap);
+    padding: 0 0 120px;
+    scroll-margin-top: 60px;
+}
+
+.cs-row:last-child {
+    padding-bottom: 0;
+}
+
+.cs-row > * {
+    grid-column: 2;
+}
+
+.cs-row > .cs-head {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0;
+    padding: 5px 5px 0 0;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ink);
+}
+
+.cs-row p {
+    line-height: 1.8;
+    margin: 0 0 6px;
+}
+
+/* image / gif / iframe + caption */
+.fig {
+    margin: 0 0 22px;
+}
+
+.fig img,
+.fig iframe {
+    display: block;
+}
+
+.fig figcaption {
+    font-family: monospace;
+    font-size: 9px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--muted);
+    padding: 6px 5px 0;
+    text-shadow: none;
+}
+
+/* images, gifs, maps: one per row, caption small italic underneath */
+.cs-row > .fig {
+    margin: 14px 0 18px;
+    <!-- grid-column: 1 / -1; -->
+}
+
+/* the one highlighted line per section: filled bar */
+.project-card-casestudy p.cs-mark {
+    background: var(--dark);
+    color: var(--paper);
+    text-shadow: none;
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 1.6;
+    padding: 8px 12px;
+    margin: 12px 0 14px;
+}
+
+@media (max-width: 600px) {
+    .cs-row {
+        grid-template-columns: 1fr;
+        padding-bottom: 72px;
+    }
+
+    .cs-row > *,
+    .cs-row > .cs-head {
+        grid-column: 1;
+    }
+
+    .cs-row > .cs-head {
+        grid-row: auto;
+        padding-bottom: 8px;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════
+   SIDE NAV LABELS BESIDE HEADINGS + DOTTED LINE
+   labels scroll with the page, then stack at the top.
+   overrides the first .side-nav block at the top of this file
+═══════════════════════════════════════════════ */
+
+.side-nav {
+    position: static;   /* the old centered, fixed nav is gone */
+    transform: none;
+}
+
+.side-nav a.side-nav-link {
+    position: fixed;
+    top: 0;
+    left: 24px;
+    z-index: 10;
+    display: block;
+    margin-top: -6px;
+    line-height: 12px;
+    font-size: 10px;
+    color: var(--muted);
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.side-nav a.side-nav-link.is-sub {
+    padding-left: 10px;
+}
+
+.side-nav a.side-nav-link.is-active {
+    color: var(--ink);
+}
+
+.side-nav a.side-nav-link:hover,
+.side-nav a.side-nav-link:focus-visible {
+    text-decoration: underline;
+}
+
+/* dotted line from the heading out to its label */
+.nav-heading {
+    position: relative;
+}
+
+.nav-heading::before {
+    content: "";
+    position: absolute;
+    right: calc(100% + 10px);
+    top: calc(5px + .7em);
+    width: var(--reach, 0px);
+    border-top: 1px dotted var(--muted);
+}
+
+.project-title.nav-heading::before {
+    top: calc(50px + .68em);
+}
+
+.paper h4.nav-heading::before {
+    top: calc(25px + .7em);
+}
+
+.nav-heading.is-active-head::before {
+    border-top-color: var(--ink);
+}
+
+/* once the label is stacked at the top, its line disappears */
+.nav-heading.is-pinned::before {
+    display: none;
+}
+
+/* not enough room beside the page */
+@media (max-width: 1100px) {
+    .side-nav,
+    .nav-heading::before {
+        display: none;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════
+   CASE STUDY HEADER + MAGAZINE COLUMNS
+═══════════════════════════════════════════════ */
+
+:root {
+    --cs-pad: 45px;   /* matches the card's side padding */
+}
+
+@media (max-width: 768px) {
+    :root { --cs-pad: 28px; }
+}
+
+@media (max-width: 480px) {
+    :root { --cs-pad: 20px; }
+}
+
+/* white dotted cut line under the nav, edge to edge of the page */
+.cs #site-header {
+    position: relative;
+    padding-bottom: 22px;
+}
+
+.cs #site-header::after {
+    content: "";
+    position: absolute;
+    left: calc(-1 * var(--cs-pad));
+    right: calc(-1 * var(--cs-pad));
+    bottom: 0;
+    height: 5px;
+    background-image:
+        radial-gradient(circle at 3px 2px, #fff 2px, transparent 1.4px),
+        radial-gradient(circle at 3px 3px, rgba(45, 40, 34, .18) 1px, transparent 1.4px);
+    background-size: 8px 5px;
+    background-repeat: repeat-x;
+}
+
+/* title block: 1 title (big, bold) / 2 tags (medium, grey) / 3 date + credits (small, grey)
+   .cs-meta-tags sits on the same row as .cs-meta-info (date + credits), first lines baseline-aligned */
+.cs-meta {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    column-gap: 24px;
+    padding: 44px 5px 64px;
+}
+
+.cs-title {
+    grid-column: 1;
+    grid-row: 1;
+    margin: 0 0 22px;
+    font-size: 34px;
+    line-height: 1.1;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.cs-meta-info {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: baseline;
+    display: flex;
+    flex-direction: column;
+}
+
+.cs-meta-tags {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: baseline;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.cs-tag {
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--muted);
+    text-shadow: none;
+}
+
+.cs-small {
+    font-family: monospace;
+    font-size: 11px;
+    font-style: italic;
+    line-height: 1.7;
+    color: var(--muted);
+    text-shadow: none;
+}
+
+@media (max-width: 600px) {
+    .cs-meta {
+        grid-template-columns: 1fr;
+        row-gap: 16px;
+    }
+
+    .cs-title {
+        margin-bottom: 6px;
+    }
+
+    .cs-meta-info,
+    .cs-meta-tags {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .cs-meta-tags {
+        align-items: flex-start;
+    }
+}
+
+/* long text (more than 2 paragraphs) runs in two columns, magazine style */
+.cs-row > .cs-cols {
+    column-count: 2;
+    column-gap: 32px;
+}
+
+.cs-cols p {
+    orphans: 2;
+    widows: 2;
+}
+
+@media (max-width: 600px) {
+    .cs-row > .cs-cols {
+        column-count: 1;
+    }
+}
+
+
+/* homepage only: no dotted lines from the headings
+   (.project-title and .paper h4 headings only exist on index.html) */
+.project-title.nav-heading::before,
+.paper h4.nav-heading::before {
+    display: none;
+}

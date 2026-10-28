@@ -14,114 +14,131 @@
 </head>
 
 <body>
-  <section class="project-card-casestudy">
-      <div id="site-header"></div>
-        <!-- <a href="index.html" class="back-button">&lt; &lt; Back to home</a> -->
-    <div class="protitle">
-      <h3><i>zupto</i></h3>
-      <p>data visualisation</p>
+  <section class="project-card-casestudy cs">
+    <div id="site-header"></div>
+    <div class="cs-meta">
+      <h3 class="cs-title">zupto</h3>
+      <div class="cs-meta-info">
+        <span class="cs-small">april 2026</span>
+        <span class="cs-small">collaborated with janvi &amp; yadhu</span>
+      </div>
+      <div class="cs-meta-tags">
+        <span class="cs-tag">data visualisation</span>
+        <span class="cs-tag">ui ux</span>
+        <span class="cs-tag">provocative</span>
+      </div>
     </div>
-    <p>an average gig worker spends 8 to 12 hours a day outside — exposed, on a two-wheeler, breathing whatever the city
-      is breathing. and in Delhi, what the city is breathing is the worst air in the world.</p>
-    <p>the government knows. the companies know. but they have no reason to move until the people who use these apps
-      start asking questions.</p>
-    <p>so we targeted users — not because they are the most guilty, but because they are the most powerful. these
-      companies exist to serve them. if users become aware and uncomfortable, the companies have no choice but to
-      respond. </p>
 
-    <p>we chose a dummy app as the medium — because it's the easiest thing to onboard someone into. they think they know
-      what they're doing. that assumption is the bait. the guilt trip comes after.</p>
+    <section class="cs-row" data-nav="The air">
+      <h4 class="cs-head">the air</h4>
+      <p>an average gig worker spends 8 to 12 hours a day outside — exposed, on a two-wheeler, breathing whatever the
+        city is breathing. and in delhi, what the city is breathing is the worst air in the world.</p>
+      <p>the government knows. the companies know. but they have no reason to move until the people who use these apps
+        start asking questions.</p>
+    </section>
 
-    <p>we divided the concept into two things-</p>
-    <!-- <p><b>+ Provocation</b> </p>
-    <p><b>+ Data visualisation</b> </p> -->
+    <section class="cs-row" data-nav="Why users">
+      <h4 class="cs-head">why we went after the users</h4>
+      <div class="cs-cols">
+      <p>so we targeted users — not because they are the most guilty, but because they are the most powerful. these
+        companies exist to serve them. if users become aware and uncomfortable, the companies have no choice but to
+        respond.</p>
+      <p>we chose a dummy app as the medium because it's the easiest thing to onboard someone into. they think they know
+        what they're doing. that assumption is the bait. the guilt trip comes after.</p>
+      <p>it came out as two things: a map, and a provocation.</p>
+      </div>
+    </section>
 
-    <!-- <div class="protitle">
-    <p class="paraleft"><b>+ Provocation</b> </p>
-    <p class="pararight"><b>+ Provocation</b> </p>
+    <section class="cs-row" data-nav="The map">
+      <h4 class="cs-head">the map</h4>
+      <p>we pulled data from CPCB's AQI monitoring stations and mapped it against the locations of dark stores across
+        delhi — the warehouses gig workers spend most of their time around, picking up and dropping off orders.</p>
+      <p>the finding was uncomfortable: most dark stores sit in the most crowded parts of the city. crowded areas drive
+        more demand, more demand means more dark stores, more dark stores mean more congestion — and more pollution.</p>
 
-    </div> -->
-    <h4>1. Data visualisation</h4>
-    <p>we pulled data from CPCB's AQI monitoring stations and mapped it against the locations of dark stores across
-      Delhi — the warehouses gig workers spend most of their time around, picking up and dropping off orders.</p>
-    <p>the finding was uncomfortable: most dark stores sit in the most crowded parts of the city. crowded areas drive
-      more demand, more demand means more dark stores, more dark stores mean more congestion — and more pollution.</p>
+      <figure class="fig">
+        <iframe src="Images/zupto/delhi_aqi_map_2024.html" width="100%" height="500px" style="border:none;"></iframe>
+        <figcaption>delhi aqi, november. a heatmap over a live street map. zoom and drag around.</figcaption>
+      </figure>
 
+      <p>the map takes about 40 datasets, picks the highest aqi month (november) and shows it as one continuous colour
+        field.</p>
+      <p>first we divided zones with voronoi diagrams — every location went to its nearest monitoring station, so each
+        boundary sat exactly halfway between two stations. but air doesn't stop at a border. so as a last step we
+        switched to a heatmap, which is a better way to show anything in the air.</p>
+      <p class="cs-mark">november's peak: 300–380, very poor. the yearly average said 180.</p>
+      <p>that's the air a rider breathes for 8 to 12 hours, every winter, every day.</p>
+    </section>
 
-    <iframe src="Images/zupto/delhi_aqi_map_2024.html" width="100%" height="500px" style="border:none;"></iframe>
+    <section class="cs-row" data-nav="The app">
+      <h4 class="cs-head">the app</h4>
+      <p>we replicated zepto's UI exactly — same layout, same visual language, same checkout flow.</p>
 
-    <p>The map takes about 40 datasets, selects the highest AQI month, November, and presents it as a continuous color
-      field over a live street map.
-    </p>
-    <p>Zones were originally divided using Voronoi diagrams, with each location on the map allocated to its nearest
-      monitoring station, resulting in zone boundaries that lay exactly in the middle of two stations.
-      However, as a last step, we employed a heatmap, which is a better approach to represent anything in the air. It
-      cannot be separated by borders.
-    </p>
+      <figure class="fig">
+        <img src="Images/zupto/Shot(1).png" class="ghar-hero" alt="the zupto home screen, copied from zepto">
+        <figcaption>the home screen. looks exactly like the real thing.</figcaption>
+      </figure>
 
-    <p>using November's peak instead of a yearly average pushed the numbers from a forgettable 180 to the 300–380 Very
-      Poor range. that's the air a rider breathes for 8 to 12 hours, every winter, every day.
-    </p>
+      <p>but at every stage of the app, something is slightly different.</p>
 
-    <h4>2. Provocation</h4>
+      <figure class="fig">
+        <img src="Images/zupto/Shot(3).png" class="ghar-hero" alt="a zupto screen with small differences from zepto">
+        <figcaption>same flow, one detail off. this is where it starts.</figcaption>
+      </figure>
 
+      <p>the address selection screen shows you the aqi of your delivery zone. most users don't know what kind of air
+        they're living inside — this puts it in front of them, unavoidably.</p>
 
-    <p>we replicated Zepto's UI exactly — same layout, same visual language, same checkout flow.</p>
+      <figure class="fig">
+        <img src="Images/zupto/Shot.png" class="ghar-hero" alt="address selection screen showing aqi">
+        <figcaption>address selection, with the aqi of your zone.</figcaption>
+      </figure>
 
-    <img src="Images/zupto/Shot(1).png" class="ghar-hero">
-    <p>but at every stage of the app, something is slightly different.</p>
-    <img src="Images/zupto/Shot(3).png" class="ghar-hero">
+      <figure class="fig">
+        <img src="Images/zupto/Shot(2).png" class="ghar-hero" alt="delivery time screen">
+        <figcaption>delivery time, now in hours.</figcaption>
+      </figure>
 
-    <p>the address selection screen shows you the AQI of your delivery zone. most users don't know what kind of air
-      they're living inside — this puts it in front of them, unavoidably.</p>
-    <div class="lattuchulha">
-      <img src="Images/zupto/Shot.png" alt="an image of chulha" class="chulha">
-
-      <img src="Images/zupto/Shot(2).png" alt="Chulha_split" class="lattu">
-
-    </div>
-    <p>your delivery time is not 10 minutes. it's hours — because in a high AQI zone, your rider is taking a longer
-      route to avoid the most polluted corridors. you can bring that time down, but only if you purchase protective
-      equipment for the rider.</p>
-    <p>[Loading screen]</p>
-    <U>
-      <p>your delivery time is not 10 minutes. it's hours — because in a high AQI zone, your rider is taking a longer
+      <p>your delivery time is not 10 minutes. it's hours — because in a high aqi zone, your rider is taking a longer
         route to avoid the most polluted corridors. you can bring that time down, but only if you purchase protective
         equipment for the rider.</p>
-    </U>
 
-    <img src="Images/zupto/Shot(4).png" class="ghar-hero">
-    <br>
-    <img src="Images/zupto/Shot(5).png" class="ghar-hero"><br>
-    <img src="Images/zupto/Shot(6).png" class="ghar-hero"><br>
+      <figure class="fig">
+        <img src="Images/zupto/Shot(4).png" class="ghar-hero" alt="zupto loading screen">
+        <figcaption>the loading screen.</figcaption>
+      </figure>
 
+      <p>tapping a coupon doesn't give you a discount. one shows how many hours a rider is exposed to toxic air in a
+        year. the other opens infographics on airborne diseases — scientifically documented, unglamorous, real. nobody
+        wants to read it. that's the point.</p>
 
+      <figure class="fig">
+        <img src="Images/zupto/Shot(5).png" class="ghar-hero" alt="coupon showing a rider's yearly exposure hours">
+        <figcaption>coupon one: hours of toxic air a rider breathes in a year.</figcaption>
+      </figure>
 
-    <p>tapping a coupon doesn't give you a discount. one shows how many hours a rider is exposed to toxic air in a year.
-      the other opens infographics on airborne diseases — scientifically documented, unglamorous, real. nobody wants to
-      read it. that's the point.</p>
+      <figure class="fig">
+        <img src="Images/zupto/Shot(6).png" class="ghar-hero" alt="coupon opening airborne disease infographics">
+        <figcaption>coupon two: infographics on airborne diseases.</figcaption>
+      </figure>
+    </section>
 
-    <p>before you place your order, there's one more thing on the bill. a health tax — ₹29 on average. but it doesn't
-      sit as one number. it explodes into a long scroll — every disease a rider is likely developing from years of
-      breathing Delhi's air, each one assigned a fraction of the rupee. PM2.5. benzene. carbon monoxide. the diseases
-      they cause. you have to scroll through all of it to place your order.</p>
-    <p>it's not accurate. it was never meant to be. the point is the scroll — the weight of the list, the realisation
-      that ₹29 cannot actually cover any of this.</p>
+    <section class="cs-row" data-nav="The bill">
+      <h4 class="cs-head">the bill</h4>
+      <p>before you place your order, there's one more thing on the bill. a health tax — ₹29 on average. but it doesn't
+        sit as one number. it explodes into a long scroll — every disease a rider is likely developing from years of
+        breathing delhi's air, each one assigned a fraction of the rupee. PM2.5. benzene. carbon monoxide. the diseases
+        they cause. you have to scroll through all of it to place your order.</p>
+      <p class="cs-mark">health tax: ₹29 on average. you scroll the whole list to pay it.</p>
+      <p>it's not accurate. it was never meant to be. the point is the scroll — the weight of the list, the realisation
+        that ₹29 cannot actually cover any of this.</p>
+    </section>
 
-
-
-
-
-
-
-
-
-    <div class="protitle">
-
-      <p>made with <b><i><a href="">Janvi</a></b></i> and <b><i><a href="">Yadhu</a></b></i></p>
-      <a href="Zupto.html" class="project-button">View next casestudy > ></a>
-    </div>
-
+      <!-- <section class="cs-row" data-nav="Credits">
+        <h4 class="cs-head">credits</h4>
+        <p>made with <b><i><a href="">Janvi</a></b></i> and <b><i><a href="">Yadhu</a></b></i></p>
+        <a href="index.html" class="project-button">Back to home > ></a>
+      </section> -->
 
   </section>
 </body>

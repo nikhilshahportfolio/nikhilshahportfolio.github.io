@@ -46,33 +46,60 @@ setInterval(updateClock, 1000);
   const nav = document.createElement('nav');
   nav.className = 'side-nav';
   nav.setAttribute('aria-label', 'Page sections');
-  const list = document.createElement('ul');
   const items = [];
 
   targets.forEach((el, i) => {
     if (!el.id) el.id = 'section-' + (i + 1);
 
-    const li = document.createElement('li');
-    if (el.dataset.navLevel === 'sub') li.className = 'is-sub';
-
     const a = document.createElement('a');
     a.href = '#' + el.id;
-    a.innerHTML = '<span class="side-nav-label"></span><span class="side-nav-tick"></span>';
-    a.querySelector('.side-nav-label').textContent = el.dataset.nav;
+    a.className = 'side-nav-link' + (el.dataset.navLevel === 'sub' ? ' is-sub' : '');
+    a.textContent = el.dataset.nav;
+    nav.appendChild(a);
 
-    li.appendChild(a);
-    list.appendChild(li);
-    items.push({ el, a });
+    const h = el.querySelector('.cs-head, .project-title, h4');
+    if (h) h.classList.add('nav-heading');
+    items.push({ el, a, h });
   });
 
-  nav.appendChild(list);
   document.body.appendChild(nav);
+
+  // each label sits beside its heading and scrolls with the page.
+  // once it reaches the top it stops there and stacks under the ones before it.
+  const TOP = 24;    // y of the first stacked label
+  const STEP = 18;   // gap between stacked labels
+  const LEFT = 24;   // must match .side-nav-link left in css
+
+  function midOffset(item) {
+    if (!item.h) return 40;
+    const cs = getComputedStyle(item.h);
+    const lh = parseFloat(cs.lineHeight) || parseFloat(cs.fontSize) * 1.3;
+    return parseFloat(cs.paddingTop) + lh / 2;
+  }
+
+  // length of the dotted line: from the end of the label to the heading
+  function setReach() {
+    items.forEach(item => {
+      if (!item.h) return;
+      const labelRight = LEFT + item.a.offsetWidth + 12;
+      const len = item.h.getBoundingClientRect().left - labelRight - 10;
+      item.h.style.setProperty('--reach', Math.max(16, len) + 'px');
+    });
+  }
 
   function update() {
     const line = window.innerHeight * 0.4;
     let current = items[0];
 
-    items.forEach(item => {
+    items.forEach((item, i) => {
+      const base = (item.h || item.el).getBoundingClientRect().top + midOffset(item);
+      const slot = TOP + i * STEP;
+      const pinned = base <= slot;
+
+      item.a.style.transform = 'translateY(' + Math.max(base, slot) + 'px)';
+      item.a.classList.toggle('is-pinned', pinned);
+      if (item.h) item.h.classList.toggle('is-pinned', pinned);
+
       if (item.el.getBoundingClientRect().top <= line) current = item;
     });
 
@@ -81,7 +108,10 @@ setInterval(updateClock, 1000);
       current = items[items.length - 1];
     }
 
-    items.forEach(item => item.a.classList.toggle('is-active', item === current));
+    items.forEach(item => {
+      item.a.classList.toggle('is-active', item === current);
+      if (item.h) item.h.classList.toggle('is-active-head', item === current);
+    });
   }
 
   let ticking = false;
@@ -90,6 +120,8 @@ setInterval(updateClock, 1000);
     ticking = true;
     requestAnimationFrame(() => { update(); ticking = false; });
   });
-  window.addEventListener('resize', update);
+  window.addEventListener('resize', () => { setReach(); update(); });
+  window.addEventListener('load', () => { setReach(); update(); });
+  setReach();
   update();
 })();
