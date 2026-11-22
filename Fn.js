@@ -125,3 +125,39 @@ setInterval(updateClock, 1000);
   setReach();
   update();
 })();
+
+
+// aechlabs: click a project to open its small window (native <dialog>, no animation)
+(function labDialog() {
+  const grid = document.querySelector('.lx-grid');
+  const dlg = document.getElementById('lxDialog');
+  if (!grid || !dlg || typeof dlg.showModal !== 'function') return;
+
+  const $ = id => document.getElementById(id);
+
+  grid.addEventListener('click', e => {
+    const card = e.target.closest('.lx-card');
+    if (!card) return;
+    e.preventDefault();
+
+    const img = card.querySelector('img');
+    const desc = card.querySelector('.lx-desc');
+
+    $('lxImg').src = img ? img.src : '';
+    $('lxImg').alt = img ? img.alt : '';
+    $('lxTitle').textContent = card.querySelector('.lx-name').textContent;
+    $('lxDate').textContent = card.querySelector('.lx-year').textContent;
+    $('lxTags').textContent = card.querySelector('.lx-tags').textContent;
+    $('lxDesc').textContent = desc ? desc.textContent.trim() : '';
+
+    // link only shows if the card has data-link
+    const link = card.dataset.link;
+    const a = $('lxLink');
+    if (link) { a.href = link; a.hidden = false; } else { a.hidden = true; }
+
+    dlg.showModal();
+  });
+
+  $('lxClose').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });  // click outside closes
+})();

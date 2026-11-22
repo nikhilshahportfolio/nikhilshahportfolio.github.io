@@ -786,6 +786,7 @@ body.lab-locked {
 
 .cs-row > * {
     grid-column: 2;
+    min-width: 0;
 }
 
 .cs-row > .cs-head {
@@ -827,7 +828,6 @@ body.lab-locked {
 /* images, gifs, maps: one per row, caption small italic underneath */
 .cs-row > .fig {
     margin: 14px 0 18px;
-    <!-- grid-column: 1 / -1; -->
 }
 
 /* the one highlighted line per section: filled bar */
@@ -968,8 +968,8 @@ body.lab-locked {
     bottom: 0;
     height: 5px;
     background-image:
-        radial-gradient(circle at 3px 2px, #fff 2px, transparent 1.4px),
-        radial-gradient(circle at 3px 3px, rgba(45, 40, 34, .18) 1px, transparent 1.4px);
+        radial-gradient(ellipse 3px 1.5px at 4px 2px, #fff 80%, transparent 100%),
+        radial-gradient(ellipse 3px 1.5px at 4px 3px, rgba(45, 40, 34, .18) 80%, transparent 100%);
     background-size: 8px 5px;
     background-repeat: repeat-x;
 }
@@ -1070,4 +1070,192 @@ body.lab-locked {
 .project-title.nav-heading::before,
 .paper h4.nav-heading::before {
     display: none;
+}
+
+
+/* ═══════════════════════════════════════════════
+   AECHLABS (rework): plain project grid, image on top, title + year, tag under.
+   no colour blocks, no animation. the old .lab-* rules above are no longer used.
+═══════════════════════════════════════════════ */
+
+.lx-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 44px 32px;
+    padding: 0 5px 40px;
+}
+
+.lx-card {
+    display: block;
+    color: var(--ink);
+    text-decoration: none;
+}
+
+.lx-thumb {
+    aspect-ratio: 16 / 9;
+    background: rgba(45, 40, 34, .08);   /* neutral, only shows if the image is missing */
+    overflow: hidden;
+}
+
+.lx-thumb img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lx-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.lx-name {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+.lx-year {
+    font-size: 9px;
+    color: var(--muted);
+    text-shadow: none;
+}
+
+.lx-tags {
+    display: block;
+    margin-top: 2px;
+    font-family: monospace;
+    font-size: 9px;
+    font-style: italic;
+    color: var(--muted);
+    text-shadow: none;
+}
+
+.lx-card:hover .lx-name,
+.lx-card:focus-visible .lx-name {
+    text-decoration: underline;
+}
+
+.lx-card:focus-visible {
+    outline: 1px dotted var(--ink);
+    outline-offset: 4px;
+}
+
+@media (max-width: 700px) {
+    .lx-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .lx-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════
+   AECHLABS: project window (native <dialog>)
+   image left, text right. no animation.
+═══════════════════════════════════════════════ */
+
+/* the description is only read by the window, not shown in the grid */
+.lx-card .lx-desc {
+    display: none;
+}
+
+.lx-dialog {
+    width: min(680px, 92vw);
+    padding: 0;
+    border: 1px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+}
+
+.lx-dialog[open] {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.lx-dialog::backdrop {
+    background: rgba(45, 40, 34, .45);
+}
+
+.lx-dialog-img {
+    min-height: 260px;
+    background: rgba(45, 40, 34, .08);
+}
+
+.lx-dialog-img img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.lx-dialog-text {
+    display: flex;
+    flex-direction: column;
+    padding: 44px 24px 24px;
+}
+
+.lx-dialog-title {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.lx-dialog-text .lx-year,
+.lx-dialog-text .lx-tags {
+    margin-top: 4px;
+}
+
+.lx-dialog .lx-dialog-desc {
+    margin: 16px 0 16px;
+    padding: 0;
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.lx-dialog .lx-link {
+    margin-top: auto;
+    align-self: flex-start;
+}
+
+.lx-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: 1px solid var(--ink);
+    color: var(--ink);
+    padding: 2px 10px;
+    font-family: monospace;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.lx-close:hover,
+.lx-close:focus-visible {
+    background: var(--ink);
+    color: var(--paper);
+}
+
+@media (max-width: 600px) {
+    .lx-dialog[open] {
+        grid-template-columns: 1fr;
+    }
+
+    .lx-dialog-img {
+        min-height: 0;
+        aspect-ratio: 16 / 9;
+    }
+
+    .lx-dialog-text {
+        padding-top: 20px;
+    }
 }
