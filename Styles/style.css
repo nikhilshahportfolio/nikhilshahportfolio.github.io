@@ -1259,3 +1259,92 @@ body.lab-locked {
         padding-top: 20px;
     }
 }
+
+
+/* ═══════════════════════════════════════════════
+   AECHLABS: link button inside the project window
+   (matches the close button: thin border, monospace, inverts on hover)
+═══════════════════════════════════════════════ */
+
+.lx-dialog .lx-link {
+    display: inline-block;
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 5px 12px;
+    border: 1px solid var(--ink);
+    background: none;
+    color: var(--ink);
+    font-family: monospace;
+    font-size: 10px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-decoration: none;
+    text-shadow: none;
+}
+
+.lx-dialog .lx-link:hover,
+.lx-dialog .lx-link:focus-visible {
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+}
+
+
+/* AECHLABS: small slideshow controls in the window */
+.lx-dialog-img {
+    position: relative;
+}
+
+.lx-slides {
+    position: absolute;
+    left: 10px;
+    bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 2px 8px;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    font-family: monospace;
+    font-size: 10px;
+    color: var(--ink);
+}
+
+.lx-slides[hidden] {
+    display: none;
+}
+
+.lx-slides button {
+    background: none;
+    border: none;
+    padding: 0 2px;
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.lx-slides button:hover,
+.lx-slides button:focus-visible {
+    text-decoration: underline;
+}
+
+
+/* AECHLABS: video in the window + controls moved to the top so they never cover the video controls */
+.lx-dialog-img video {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: rgba(45, 40, 34, .08);
+}
+
+.lx-dialog-img img[hidden],
+.lx-dialog-img video[hidden] {
+    display: none;
+}
+
+.lx-slides {
+    top: 10px;
+    bottom: auto;
+}

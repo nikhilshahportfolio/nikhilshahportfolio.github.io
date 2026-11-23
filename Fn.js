@@ -134,6 +134,30 @@ setInterval(updateClock, 1000);
   if (!grid || !dlg || typeof dlg.showModal !== 'function') return;
 
   const $ = id => document.getElementById(id);
+  let slides = [];
+  let index = 0;
+
+  const VIDEO = /\.(mp4|webm|mov|m4v)$/i;   // anything else is treated as an image
+
+  function show(i) {
+    index = (i + slides.length) % slides.length;
+    const src = slides[index];
+    const isVideo = VIDEO.test(src);
+    const v = $('lxVideo');
+
+    v.pause();
+    $('lxImg').hidden = isVideo;
+    v.hidden = !isVideo;
+
+    if (isVideo) {
+      v.src = src;
+    } else {
+      v.removeAttribute('src');
+      v.load();
+      $('lxImg').src = src;
+    }
+    $('lxCount').textContent = (index + 1) + ' / ' + slides.length;
+  }
 
   grid.addEventListener('click', e => {
     const card = e.target.closest('.lx-card');
@@ -143,8 +167,20 @@ setInterval(updateClock, 1000);
     const img = card.querySelector('img');
     const desc = card.querySelector('.lx-desc');
 
-    $('lxImg').src = img ? img.src : '';
+    // first slide is the card image, the rest come from data-images (comma separated)
+    const first = img ? img.getAttribute('src') : '';
+    slides = first ? [first] : [];   // an empty thumbnail is skipped
+    if (card.dataset.images) {
+      card.dataset.images.split(',').forEach(s => {
+        s = s.trim();
+        if (s) slides.push(s);
+      });
+    }
+    if (!slides.length) slides = [''];
     $('lxImg').alt = img ? img.alt : '';
+    $('lxSlides').hidden = slides.length < 2;
+    show(0);
+
     $('lxTitle').textContent = card.querySelector('.lx-name').textContent;
     $('lxDate').textContent = card.querySelector('.lx-year').textContent;
     $('lxTags').textContent = card.querySelector('.lx-tags').textContent;
@@ -153,10 +189,27 @@ setInterval(updateClock, 1000);
     // link only shows if the card has data-link
     const link = card.dataset.link;
     const a = $('lxLink');
-    if (link) { a.href = link; a.hidden = false; } else { a.hidden = true; }
+    if (link) {
+      a.href = link;
+      a.textContent = (card.dataset.linkLabel || 'open project') + ' > >';
+      a.hidden = false;
+    } else {
+      a.hidden = true;
+    }
 
     dlg.showModal();
   });
+
+  $('lxPrev').addEventListener('click', () => show(index - 1));
+  $('lxNext').addEventListener('click', () => show(index + 1));
+
+  dlg.addEventListener('keydown', e => {
+    if (slides.length < 2) return;
+    if (e.key === 'ArrowLeft') show(index - 1);
+    if (e.key === 'ArrowRight') show(index + 1);
+  });
+
+  dlg.addEventListener('close', () => $('lxVideo').pause());   // stop the video when the window closes
 
   $('lxClose').addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });  // click outside closes

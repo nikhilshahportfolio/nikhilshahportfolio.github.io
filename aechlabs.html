@@ -26,10 +26,14 @@
     <div class="lx-grid">
 
       <!-- ========== CARD TEMPLATE (copy from here ...)
-      the link is optional: put the url in data-link, or leave data-link="" for no link.
+      data-link is optional: put the url in it, or leave data-link="" for no link.
+      data-link-label is optional: the button text (default "open").
+      data-images is optional: extra images or videos (.mp4) for the slideshow, comma separated.
+      the card's own image is always the first slide.
       the year can be any date text, like "mar 2026".
-      <a class="lx-card" href="#" data-link="https://example.com">
-        <div class="lx-thumb"><img src="Images/aechlabs/name.jpg" alt=""></div>
+      <a class="lx-card" href="#" data-link="https://example.com" data-link-label="watch it"
+        data-images="Images/aechlabs/name/2.jpg, Images/aechlabs/name/3.jpg">
+        <div class="lx-thumb"><img src="Images/aechlabs/name.jpg" alt="name"></div>
         <div class="lx-meta">
           <span class="lx-name">name</span>
           <span class="lx-year">2026</span>
@@ -39,78 +43,149 @@
       </a>
       ... to here ========== -->
 
-      <a class="lx-card" href="#" data-link="">
-        <div class="lx-thumb"><img src="Images/aechlabs/pour-ras.jpg" alt="pour-ras"></div>
+      <a class="lx-card" href="#" data-link="https://vimeo.com/1249163136?share=copy&amp;fl=sv&amp;fe=ci"
+        data-link-label="watch it">
+        <div class="lx-thumb"><img src="Images/aechlabs/Missaim/f2.png" alt="miss-aim"></div>
         <div class="lx-meta">
-          <span class="lx-name">pour-ras</span>
+          <span class="lx-name">miss-aim</span>
+          <span class="lx-year">2024</span>
+        </div>
+        <span class="lx-tags">short film</span>
+        <span class="lx-desc">a tired employee, bored by his mechanical and tedious work, dances to pink floyd.</span>
+      </a>
+
+      <a class="lx-card" href="#" data-link="https://vimeo.com/1249165421?share=copy&amp;fl=sv&amp;fe=ci"
+        data-link-label="watch it">
+        <div class="lx-thumb"><img src="Images/aechlabs/d(x)/Screenshot (121).png" alt="d(x)"></div>
+        <div class="lx-meta">
+          <span class="lx-name">d(x)</span>
+          <span class="lx-year">2024</span>
+        </div>
+        <span class="lx-tags">short film</span>
+        <span class="lx-desc">a person battling his inner demons.</span>
+      </a>
+
+      <a class="lx-card" href="#" data-link="https://vimeo.com/1249166169?share=copy&amp;fl=sv&amp;fe=ci"
+        data-link-label="watch it">
+        <div class="lx-thumb"><img src="Images/aechlabs/Chamku ad/Screenshot (122).png" alt="chamku"></div>
+        <div class="lx-meta">
+          <span class="lx-name">chamku</span>
+          <span class="lx-year">2025</span>
+        </div>
+        <span class="lx-tags">advertisement</span>
+        <span class="lx-desc">breaking the long tradition of yellow teeth with chamku.</span>
+      </a>
+
+      <a class="lx-card" href="#" data-link="https://vimeo.com/1249167264?share=copy&amp;fl=sv&amp;fe=ci"
+        data-link-label="watch it">
+        <div class="lx-thumb"><img src="Images/aechlabs/Bittergod/Screenshot (123).png" alt="bittergod"></div>
+        <div class="lx-meta">
+          <span class="lx-name">bittergod</span>
           <span class="lx-year">2026</span>
         </div>
-        <span class="lx-tags">physical computing</span>
-        <span class="lx-desc">a wooden xylophone i built. how hard you hit and the gaps between the hits decide the mood — sad, neutral or happy — and the matching drink gets pumped out. arduino, a mic module, relays and pumps.</span>
+        <span class="lx-tags">music video</span>
+        <span class="lx-desc"><i>i can't tell, hear it out.</i></span>
       </a>
 
-      <a class="lx-card" href="#" data-link="">
-        <div class="lx-thumb"><img src="Images/gentlemen-it-is-with-great-pleasure-to-inform-you-that.jpg" alt="basti"></div>
+      <a class="lx-card" href="#" data-link="https://vimeo.com/1249175626?share=copy&fl=sv&fe=ci"
+        data-link-label="watch it">
+        <div class="lx-thumb"><img src="Images/Humpanchiumuktgagank/HPUMGk.png" alt="bittergod"></div>
         <div class="lx-meta">
-          <span class="lx-name">basti</span>
-          <span class="lx-year"></span>
+          <span class="lx-name"><i>Hum panchi umukt gagan k </i></span>
+          <span class="lx-year">2025</span>
         </div>
-        <span class="lx-tags">board game</span>
-        <span class="lx-desc">a physical, semi-cooperative board game set in a slum community in ahmedabad. still being refined through playtests.</span>
+        <span class="lx-tags">Poetic video</span>
+        <span class="lx-desc"><i>One shot puppetering story</i></span>
       </a>
 
-      <a class="lx-card" href="#" data-link="">
-        <div class="lx-thumb"><img src="Images/aechlabs/solarsense.jpg" alt="solarsense"></div>
+      <a class="lx-card" href="#" data-link="https://heyzine.com/flip-book/69e485dd4c.html" data-link-label="read it">
+        <div class="lx-thumb"><img src="Images/aechlabs/Fledge into yonder/bi.jpg" alt="fledge into yonder"></div>
         <div class="lx-meta">
-          <span class="lx-name">solarsense</span>
-          <span class="lx-year"></span>
-        </div>
-        <span class="lx-tags">mobile app</span>
-        <span class="lx-desc">an app on household energy use, built from fieldwork in ahmedabad. the question we locked: how do you make a small overage feel real to a solar household?</span>
-      </a>
-
-      <a class="lx-card" href="#" data-link="">
-        <div class="lx-thumb"><img src="Images/aechlabs/ship-binaural.jpg" alt="ship, binaural"></div>
-        <div class="lx-meta">
-          <span class="lx-name">ship, binaural</span>
-          <span class="lx-year">2026</span>
-        </div>
-        <span class="lx-tags">sound</span>
-        <span class="lx-desc">a binaural sound piece of a man on a ship, made for the multisensory sound module. it is about how sound changes meaning and context.</span>
-      </a>
-
-      <a class="lx-card" href="#" data-link="">
-        <div class="lx-thumb"><img src="Images/aechlabs/hum-panchi.jpg" alt="hum panchi unmukt gagan k"></div>
-        <div class="lx-meta">
-          <span class="lx-name">hum panchi unmukt gagan k</span>
-          <span class="lx-year">2026</span>
-        </div>
-        <span class="lx-tags">video poem</span>
-        <span class="lx-desc">a video poem told with puppets. a bird in a golden cage, fed and safe, chooses to leave anyway.</span>
-      </a>
-
-      <a class="lx-card" href="#" data-link="">
-        <div class="lx-thumb"><img src="Images/aechlabs/fledge.jpg" alt="fledge"></div>
-        <div class="lx-meta">
-          <span class="lx-name">fledge</span>
-          <span class="lx-year"></span>
+          <span class="lx-name">fledge into yonder</span>
+          <span class="lx-year">2025-26</span>
         </div>
         <span class="lx-tags">comic</span>
-        <span class="lx-desc">an early comic from a college course, about a bird breaking a loop to explore a forest.</span>
+        <span class="lx-desc"><i>a bird exploring what society fears.</i></span>
       </a>
+
+      <a class="lx-card" href="#" data-link="Images/aechlabs/Cinemagraph/Cinemagraph.gif" data-link-label="watch it">
+        <div class="lx-thumb"><img src="Images/aechlabs/Cinemagraph/Cinemagraph.gif" alt="cinemagraph"></div>
+        <div class="lx-meta">
+          <span class="lx-name">cinemagraph</span>
+          <span class="lx-year">2025</span>
+        </div>
+        <span class="lx-tags"></span>
+        <span class="lx-desc"></span>
+      </a>
+
+      <a class="lx-card" href="#" data-link=""
+        data-images="Images/aechlabs/Dhyana/Artboard 4-100.jpg, Images/aechlabs/Dhyana/Artboard 5-100.jpg, Images/aechlabs/Dhyana/Dhyana.gif">
+        <div class="lx-thumb"><img src="Images/aechlabs/Dhyana/Artboard 1-100.jpg" alt="dhyana"></div>
+        <div class="lx-meta">
+          <span class="lx-name">dhyana</span>
+          <span class="lx-year">2025</span>
+        </div>
+        <span class="lx-tags">font</span>
+        <span class="lx-desc">this piece draws from the quiet power of buddha's meditative gaze. the smooth, flowing
+          lines echo the gentle rhythm of breath, a visual inhale and exhale, while the grounding bar holds everything
+          in stillness, like the centered mind in deep meditation. inspired by dhyana, the state of inner calm and
+          clarity, it's a reminder that stillness isn't empty. it's full of quiet awareness, just like the buddha
+          taught.</span>
+      </a>
+
+      <a class="lx-card" href="#" data-link="" data-images="Images/aechlabs/Aech animation/AECH Animation.mp4">
+        <div class="lx-thumb"><img src="Images/aechlabs/Aech animation/Screenshot (51).png" alt="aech"></div>
+        <div class="lx-meta">
+          <span class="lx-name">Aech</span>
+          <span class="lx-year">2025</span>
+        </div>
+        <span class="lx-tags">Animation</span>
+        <span class="lx-desc">Keyframed animation in after effects of title"Aech"</span>
+      </a>
+
+
+      <a class="lx-card" href="" data-link="Images/Doyoubeliveinyourpoliticalparty/TEMPLATE-1.jpg">
+        <div class="lx-thumb"><img src="Images/Doyoubeliveinyourpoliticalparty/TEMPLATE-1.jpg" alt="aech"></div>
+        <div class="lx-meta">
+          <span class="lx-name">Doyoubeliveinyourpoliticalparty</span>
+          <span class="lx-year">2026</span>
+        </div>
+        <span class="lx-tags">Speculation</span>
+        <span class="lx-desc"></span>
+      </a>
+
+      <a class="lx-card" href="" data-link="Images/aechlabs/houseofroaches/Houseforroaches_page_1.jpg">
+        <div class="lx-thumb"><img src="Images/aechlabs/houseofroaches/Houseforroaches_page_1.jpg" alt="aech"></div>
+        <div class="lx-meta">
+          <span class="lx-name">houseofroaches</span>
+          <span class="lx-year">2026</span>
+        </div>
+        <span class="lx-tags">Speculation</span>
+        <span class="lx-desc">A speculative idea for german-roaches, making a home for them</span>
+      </a>
+
+
 
     </div>
 
     <!-- project window: filled by Fn.js when a card is clicked -->
     <dialog class="lx-dialog" id="lxDialog">
-      <button type="button" class="lx-close" id="lxClose">close</button>
-      <div class="lx-dialog-img"><img id="lxImg" src="" alt=""></div>
+      <button type="button" class="lx-close" id="lxClose">X</button>
+      <div class="lx-dialog-img">
+        <img id="lxImg" src="" alt="">
+        <video id="lxVideo" controls playsinline preload="metadata" hidden></video>
+        <div class="lx-slides" id="lxSlides" hidden>
+          <button type="button" id="lxPrev">←</button>
+          <span id="lxCount"></span>
+          <button type="button" id="lxNext">→</button>
+        </div>
+      </div>
       <div class="lx-dialog-text">
         <h4 class="lx-dialog-title" id="lxTitle"></h4>
         <span class="lx-year" id="lxDate"></span>
         <span class="lx-tags" id="lxTags"></span>
         <p class="lx-dialog-desc" id="lxDesc"></p>
-        <a class="lx-link" id="lxLink" href="#" target="_blank" rel="noopener" hidden>open project > ></a>
+        <a class="lx-link" id="lxLink" href="#" target="_blank" rel="noopener" hidden>open</a>
       </div>
     </dialog>
   </section>
