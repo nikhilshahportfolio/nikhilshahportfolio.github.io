@@ -1,0 +1,143 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-24T00:00:00Z",
+  "title": "Design System: Nikhil Shah — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "archive-cream": { "role": "neutral", "displayName": "Archive Cream", "canonical": "#fff8e6", "tonalRamp": ["#3d3420", "#5e5235", "#857652", "#ab9c76", "#cfc29d", "#eadfbf", "#f8efd6", "#fffbf2"] },
+      "desk-white": { "role": "neutral", "displayName": "Desk White", "canonical": "#ffffff", "tonalRamp": ["#262626", "#404040", "#5e5e5e", "#808080", "#a3a3a3", "#c7c7c7", "#e6e6e6", "#ffffff"] },
+      "carbon-ink": { "role": "primary", "displayName": "Carbon Ink", "canonical": "#2d2822", "tonalRamp": ["#1a1713", "#2d2822", "#4a4238", "#685e52", "#8a7f71", "#ada395", "#d1c9bd", "#efeae2"] },
+      "faded-ribbon": { "role": "primary", "displayName": "Faded Ribbon", "canonical": "#4A4238", "tonalRamp": ["#1f1b16", "#342e27", "#4a4238", "#655b4f", "#837869", "#a39886", "#c6bcab", "#e9e2d6"] },
+      "redaction-navy": { "role": "secondary", "displayName": "Redaction Navy", "canonical": "#1E212B", "tonalRamp": ["#12141a", "#1e212b", "#323746", "#4b5164", "#686f85", "#8a90a5", "#b1b5c5", "#dcdee6"] },
+      "filing-grey": { "role": "neutral", "displayName": "Filing Grey", "canonical": "#808080", "tonalRamp": ["#262626", "#404040", "#5e5e5e", "#808080", "#a3a3a3", "#c7c7c7", "#e6e6e6", "#f7f7f7"] },
+      "carbon-haze": { "role": "neutral", "displayName": "Carbon Haze", "canonical": "#d7d8e4", "tonalRamp": ["#2b2c38", "#454757", "#62657a", "#83869d", "#a5a8bd", "#d7d8e4", "#e9eaf1", "#f7f7fa"] },
+      "scrim": { "role": "neutral", "displayName": "Scrim", "canonical": "rgba(45, 40, 34, .45)" },
+      "placeholder-wash": { "role": "neutral", "displayName": "Placeholder Wash", "canonical": "rgba(45, 40, 34, .08)" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Case-study title only, lowercase." },
+      "headline": { "displayName": "Headline", "purpose": "Project titles on home page cards." },
+      "title": { "displayName": "Title", "purpose": "Margin headings, lab card names, project window title." },
+      "body": { "displayName": "Body", "purpose": "All running text; two magazine columns for long passages." },
+      "label": { "displayName": "Label", "purpose": "Text-link CTAs; tags and dates at the same scale in grey." },
+      "caption": { "displayName": "Caption", "purpose": "Figure captions, italic, Filing Grey." },
+      "meta-mono": { "displayName": "Meta Mono", "purpose": "Case-study date and credits, the redaction bar." }
+    },
+    "shadows": [
+      { "name": "ink-bleed", "value": "text-shadow: 1px 1px 1px #d7d8e4", "purpose": "Text on paper only; a printed-ink feel, not elevation. Disabled on typed elements." }
+    ],
+    "motion": [
+      { "name": "none", "value": "0s", "purpose": "The system is still. State changes (hover inversion, dialog open) are instant." },
+      { "name": "scroll", "value": "scroll-behavior: smooth", "purpose": "In-page anchor jumps from the margin nav." }
+    ],
+    "breakpoints": [
+      { "name": "mobile", "value": "480px" },
+      { "name": "small", "value": "600px" },
+      { "name": "lab-two-up", "value": "700px" },
+      { "name": "tablet", "value": "768px" },
+      { "name": "narrow", "value": "900px" },
+      { "name": "margin-nav", "value": "1100px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bordered Control",
+      "kind": "button",
+      "refersTo": "control-bordered",
+      "description": "Close, window link, and slide controls: a 1px ink outline that inverts on hover and focus.",
+      "html": "<button class=\"ds-control\">open project</button>",
+      "css": ".ds-control { background: #fff8e6; border: 1px solid #2d2822; color: #2d2822; padding: 5px 12px; font-family: monospace; font-size: 10px; line-height: 1.4; border-radius: 0; cursor: pointer; } .ds-control:hover, .ds-control:focus-visible { background: #2d2822; color: #fff8e6; outline: none; }"
+    },
+    {
+      "name": "Text Link",
+      "kind": "button",
+      "refersTo": "text-link",
+      "description": "The primary CTA on paper cards: small, bold, underlines on hover.",
+      "html": "<a class=\"ds-text-link\" href=\"#\">view full casestudy &gt; &gt;</a>",
+      "css": ".ds-text-link { display: inline-block; color: #4A4238; font-family: 'Open Sans', sans-serif; font-size: 9px; font-weight: 600; text-decoration: none; text-shadow: 1px 1px 1px #d7d8e4; } .ds-text-link:hover, .ds-text-link:focus-visible { text-decoration: underline; }"
+    },
+    {
+      "name": "Paper Card",
+      "kind": "card",
+      "refersTo": "paper-card",
+      "description": "Home page project sheet: title, tags and date row, hero, description, text link.",
+      "html": "<section class=\"ds-paper\"><h2 class=\"ds-paper-title\">zupto</h2><div class=\"ds-paper-head\"><span class=\"ds-paper-tags\">app.satire.data.visualisation</span><span class=\"ds-paper-date\">Mar 2026</span></div><div class=\"ds-paper-hero\"></div><p class=\"ds-paper-desc\">a satirical app about breathing delhi's air, priced by the minute.</p><a class=\"ds-paper-link\" href=\"#\">view full casestudy &gt; &gt;</a></section>",
+      "css": ".ds-paper { max-width: 550px; background: #fff8e6; color: #4A4238; padding: 0 45px 30px; font-family: 'Open Sans', sans-serif; text-shadow: 1px 1px 1px #d7d8e4; } .ds-paper-title { margin: 0; padding-top: 40px; font-size: 24px; font-weight: 700; } .ds-paper-head { display: flex; justify-content: space-between; align-items: baseline; margin: 8px 0; } .ds-paper-tags { font-size: 9px; font-style: italic; } .ds-paper-date { font-size: 8px; color: #808080; } .ds-paper-hero { aspect-ratio: 16/9; background: rgba(45,40,34,.08); } .ds-paper-desc { font-size: 12px; line-height: 1.8; } .ds-paper-link { color: #4A4238; font-size: 9px; font-weight: 600; text-decoration: none; } .ds-paper-link:hover, .ds-paper-link:focus-visible { text-decoration: underline; }"
+    },
+    {
+      "name": "Highlight Bar",
+      "kind": "custom",
+      "refersTo": "highlight-bar",
+      "description": "The redaction bar: one key line per case-study section.",
+      "html": "<p class=\"ds-mark\">the air was the product. we just put a price on it.</p>",
+      "css": ".ds-mark { background: #1E212B; color: #fff8e6; font-family: monospace; font-size: 11px; line-height: 1.6; padding: 8px 12px; margin: 12px 0 14px; text-shadow: none; }"
+    },
+    {
+      "name": "Figure + Caption",
+      "kind": "custom",
+      "description": "Full-column evidence image with a typed italic caption.",
+      "html": "<figure class=\"ds-fig\"><div class=\"ds-fig-img\"></div><figcaption>fig. 2 — delhi aqi, 2024, mapped by ward</figcaption></figure>",
+      "css": ".ds-fig { margin: 14px 0 18px; } .ds-fig-img { aspect-ratio: 16/9; background: rgba(45,40,34,.08); } .ds-fig figcaption { font-family: monospace; font-size: 9px; font-style: italic; line-height: 1.6; color: #808080; padding: 6px 5px 0; }"
+    },
+    {
+      "name": "Case Study Row",
+      "kind": "custom",
+      "description": "Margin-gutter heading beside the section content; sections separated by empty paper.",
+      "html": "<section class=\"ds-row\"><h4 class=\"ds-row-head\">the air</h4><div class=\"ds-row-body\"><p>delhi breathes some of the worst air in the world, and nobody talks about it until november.</p></div></section>",
+      "css": ".ds-row { display: grid; grid-template-columns: 140px 1fr; column-gap: 24px; background: #fff8e6; color: #2d2822; padding: 24px; font-family: 'Open Sans', sans-serif; } .ds-row-head { margin: 0; padding-top: 5px; font-size: 13px; font-weight: 700; line-height: 1.4; } .ds-row-body p { font-size: 12px; line-height: 1.8; margin: 0; text-shadow: 1px 1px 1px #d7d8e4; }"
+    },
+    {
+      "name": "Lab Card",
+      "kind": "card",
+      "description": "Aech Labs grid item: bare image, name and year on one baseline, typed tags.",
+      "html": "<a class=\"ds-lab\" href=\"#\"><div class=\"ds-lab-thumb\"></div><div class=\"ds-lab-meta\"><span class=\"ds-lab-name\">night market</span><span class=\"ds-lab-year\">2026</span></div><span class=\"ds-lab-tags\">music video</span></a>",
+      "css": ".ds-lab { display: block; width: 240px; color: #2d2822; text-decoration: none; font-family: 'Open Sans', sans-serif; } .ds-lab-thumb { aspect-ratio: 16/9; background: rgba(45,40,34,.08); } .ds-lab-meta { display: flex; justify-content: space-between; align-items: baseline; margin-top: 10px; } .ds-lab-name { font-size: 12px; font-weight: 700; } .ds-lab-year { font-size: 9px; color: #808080; } .ds-lab-tags { display: block; margin-top: 2px; font-family: monospace; font-size: 9px; font-style: italic; color: #808080; } .ds-lab:hover .ds-lab-name, .ds-lab:focus-visible .ds-lab-name { text-decoration: underline; } .ds-lab:focus-visible { outline: 1px dotted #2d2822; outline-offset: 4px; }"
+    },
+    {
+      "name": "Top Navigation",
+      "kind": "nav",
+      "description": "Grey justified link row at the top of each sheet.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">home</a><a href=\"#\">aech labs</a><a href=\"#\">resume</a><a href=\"#\">contact</a></nav>",
+      "css": ".ds-nav { display: flex; justify-content: space-between; gap: 16px; padding: 20px 0; font-family: 'Open Sans', sans-serif; font-size: 12px; } .ds-nav a { color: #808080; text-decoration: none; white-space: nowrap; } .ds-nav a:hover, .ds-nav a:focus-visible { text-decoration: underline; color: #2d2822; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Filed Dossier",
+    "overview": "Every page is a sheet of Archive Cream paper on a plain white desk, holding a case file: typed captions, margin headings, a dotted cut line under the masthead, and one line per section blacked out by a redaction bar. It reads like a government file put together by someone with an editor's eye. Minimal, detailed, and seriously playful: the playfulness lives in the details (the redaction bar, the stamped controls, the dotted leaders from heading to margin label), never in motion or spectacle.\n\nType is small and dense, set lowercase, and the page is mostly paper. Hierarchy comes from weight and position (bold headings in a left gutter, grey meta to the right), not from size jumps or colour. The work carries the page: images run full column width, text sits quietly around them, and the interface stays out of the way.\n\nThe system is flat and still on purpose. Nothing animates, nothing floats, and depth is the cream sheet against the white page and nothing else. It has to load fast on a slow mobile connection, so it uses one web font, system monospace, and no frameworks.",
+    "keyCharacteristics": [
+      "Cream sheets (Archive Cream) on a white desk, square corners, no shadows",
+      "Open Sans for everything you read; system monospace for anything \"typed\" (captions, dates, controls)",
+      "Lowercase copy, small sizes (9–13px for most text), generous line-height (1.8)",
+      "Margin-gutter headings on case studies, with one redaction-bar highlight per section",
+      "Controls are 1px ink outlines that invert to solid ink, with no transitions",
+      "A faint blue-grey text-shadow on paper, like ink bleeding into the sheet"
+    ],
+    "rules": [
+      { "name": "The Two Inks Rule", "body": "Text is Carbon Ink or Faded Ribbon, and everything else is paper. No accent colours, no coloured links, no tinted panels.", "section": "colors" },
+      { "name": "The One Redaction Rule", "body": "Redaction Navy appears once per case-study section, as the highlight bar, and nowhere else. It only works because it's rare.", "section": "colors" },
+      { "name": "The Grey Is Metadata Rule", "body": "Filing Grey is for dates, tags, captions and inactive nav, never for body copy. On cream it is only 3.7:1, below AA for small text, so it's a known contrast gap to fix, not something to spread.", "section": "colors" },
+      { "name": "The Lowercase Rule", "body": "Copy is written in lowercase, including titles and tags. Don't title-case or uppercase anything for emphasis.", "section": "typography" },
+      { "name": "The Typed Means Mono Rule", "body": "Anything that reads as filed, stamped or machine-printed (captions, dates, credits, button labels, the redaction bar) is monospace. Anything someone wrote is Open Sans.", "section": "typography" },
+      { "name": "The Empty Paper Rule", "body": "Sections are separated by whitespace, never by lines, boxes or background changes. If two sections feel like they run together, add space.", "section": "layout" },
+      { "name": "The Flat File Rule", "body": "Nothing casts a shadow. Separation is paper against desk, a 1px ink line, or a scrim.", "section": "elevation" },
+      { "name": "The Square Corner Rule", "body": "No border-radius anywhere. A rounded corner would read as app UI, not paper.", "section": "shapes" }
+    ],
+    "dos": [
+      "Do put every surface on Archive Cream (#fff8e6) over Desk White (#ffffff), with square corners and no shadow.",
+      "Do set text in Carbon Ink (#2d2822) or Faded Ribbon (#4A4238), and keep Filing Grey (#808080) for metadata.",
+      "Do use monospace for typed and filed things (captions, dates, credits, control labels) and Open Sans for writing.",
+      "Do separate case-study sections with 120px of empty paper and put the section heading in the 140px left gutter.",
+      "Do give each case-study section at most one Redaction Navy (#1E212B) highlight bar.",
+      "Do make controls 1px Carbon Ink outlines that invert to a solid ink fill on hover and focus.",
+      "Do write in lowercase."
+    ],
+    "donts": [
+      "Don't add animations, scroll effects, loading screens or interactive toys. The page stays still.",
+      "Don't use border-radius, drop shadows, gradients or coloured accents.",
+      "Don't use generic SaaS layouts, like hero sections with gradient blobs.",
+      "Don't add heavy JS frameworks or extra web fonts. Open Sans plus system monospace is the whole type budget.",
+      "Don't use Filing Grey for body copy, and don't push it smaller than it already is.",
+      "Don't separate sections with horizontal rules or boxed panels. Use empty space."
+    ]
+  }
+}

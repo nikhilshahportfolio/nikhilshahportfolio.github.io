@@ -127,6 +127,31 @@ setInterval(updateClock, 1000);
 })();
 
 
+// aechlabs: put the newest project first, using the date text in .lx-year
+// understands "nov 2024", "2024", and "2025-26" (uses the later year). no month = end of that year.
+(function labSort() {
+  const grid = document.querySelector('.lx-grid');
+  if (!grid) return;
+  const MONTHS = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+
+  function when(card) {
+    const el = card.querySelector('.lx-year');
+    const text = el ? el.textContent.toLowerCase() : '';
+    const years = text.match(/\d{2,4}/g);
+    if (!years) return 0;                       // no date: goes to the bottom
+    let year = years[years.length - 1];
+    if (year.length === 2) year = years[0].slice(0, 2) + year;   // "2025-26" -> 2026
+    const m = MONTHS.findIndex(name => text.includes(name));
+    return Number(year) * 100 + (m === -1 ? 12 : m + 1);
+  }
+
+  const cards = Array.from(grid.querySelectorAll('.lx-card'));
+  cards
+    .map((card, i) => ({ card, i, t: when(card) }))
+    .sort((a, b) => b.t - a.t || a.i - b.i)     // same date: keeps the order in the html
+    .forEach(item => grid.appendChild(item.card));
+})();
+
 // aechlabs: click a project to open its small window (native <dialog>, no animation)
 (function labDialog() {
   const grid = document.querySelector('.lx-grid');

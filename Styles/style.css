@@ -1348,3 +1348,148 @@ body.lab-locked {
     top: 10px;
     bottom: auto;
 }
+
+/* ═══════════════════════════════════════════════
+   AECHLABS: one fixed window size for every project
+   (bigger, image wider than text, whole image shown, long text scrolls)
+═══════════════════════════════════════════════ */
+
+.lx-dialog {
+    width: min(960px, 94vw);
+    height: min(560px, 86vh);
+}
+
+.lx-dialog[open] {
+    grid-template-columns: 3fr 2fr;
+    grid-template-rows: 100%;
+}
+
+.lx-dialog-img {
+    min-height: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+.lx-dialog-img img {
+    object-fit: contain;   /* every image fits the same box, nothing gets cropped */
+}
+
+.lx-dialog-text {
+    min-height: 0;
+    overflow-y: auto;
+}
+
+
+/* AECHLABS: slider arrows on the left and right edge of the image */
+.lx-dialog-img .lx-slides {
+    inset: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    pointer-events: none;   /* clicks pass through to the video, only the arrows catch them */
+}
+
+.lx-slides .lx-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    font-family: monospace;
+    font-size: 16px;
+    line-height: 1;
+    color: var(--ink);
+    pointer-events: auto;
+}
+
+.lx-slides .lx-prev {
+    left: 10px;
+}
+
+.lx-slides .lx-next {
+    right: 10px;
+}
+
+.lx-slides .lx-arrow:hover,
+.lx-slides .lx-arrow:focus-visible {
+    background: var(--ink);
+    color: var(--paper);
+    text-decoration: none;
+}
+
+.lx-slides .lx-count {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 1px 6px;
+    background: var(--paper);
+    font-family: monospace;
+    font-size: 10px;
+    color: var(--ink);
+}
+
+@media (max-width: 600px) {
+    .lx-dialog {
+        height: auto;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .lx-dialog[open] {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .lx-dialog-img {
+        height: auto;
+        aspect-ratio: 16 / 9;
+    }
+
+    .lx-dialog-text {
+        overflow: visible;
+    }
+}
+
+
+/* ═══════════════════════════════════════════════
+   AECHLABS: hide the link button when a project has no link
+   (display:inline-block above was overriding the hidden attribute)
+═══════════════════════════════════════════════ */
+
+.lx-dialog .lx-link[hidden] {
+    display: none;
+}
+
+
+/* ═══════════════════════════════════════════════
+   AECHLABS: close button always on top of the image,
+   and no empty gap under the image on phones
+═══════════════════════════════════════════════ */
+
+.lx-dialog .lx-close {
+    z-index: 2;
+    background: var(--paper);
+}
+
+@media (max-width: 600px) {
+    .lx-dialog[open] {
+        align-content: start;
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   aechlabs: keep name and date on one line
+   (long names wrap, the date never breaks)
+   ═══════════════════════════════════════════════ */
+.lx-name {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.lx-year {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
