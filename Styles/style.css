@@ -1,3 +1,6 @@
+/* one typeface across the whole site: the typewriter face from the intro */
+:root { --font-type: "Courier New", Courier, monospace; }
+
 html { scroll-behavior: smooth; }
 
 .side-nav {
@@ -22,7 +25,7 @@ html { scroll-behavior: smooth; }
     display: flex;
     align-items: center;
     gap: 8px;
-    color: grey;
+    color: var(--ink-meta);
     text-decoration: none;
     font-size: 9px;
 }
@@ -38,7 +41,7 @@ html { scroll-behavior: smooth; }
     display: block;
     width: 12px;
     height: 1px;
-    background: grey;
+    background: var(--ink-meta);
     transition: width .25s, background .25s;
 }
 
@@ -81,7 +84,7 @@ body {
     align-items: center;
     gap: 10px;
     font-size: 10px;
-    color: grey;
+    color: var(--ink-meta);
     margin-top: 14px;
 }
 
@@ -119,7 +122,7 @@ header ul {
 
 header ul li a {
     text-decoration: none;
-    color: grey;
+    color: var(--ink-meta);
     white-space: nowrap;
 }
 
@@ -147,7 +150,7 @@ header ul li a {
 /* typewritten text, like a label typed straight onto the sheet */
 .typed {
     margin: 28px 0 0 40px;
-    font-family: "Courier New", Courier, monospace;
+    font-family: var(--font-type);
     font-size: 12px;
     line-height: 1.5;
     color: var(--ink, #2d2822);
@@ -204,7 +207,7 @@ header ul li a {
 
 .project-date {
     font-size: 8px;
-    color: grey;
+    color: var(--ink-meta);
 }
 
 .project-header {
@@ -264,6 +267,13 @@ header ul li a {
     text-shadow: 1px 1px 1px #d7d8e4;
     padding-bottom: 50px;
 }
+
+/* text on the yellow sheets is typed; anything you can click (navbar, links, buttons) is not */
+.cs,
+.paper,
+.project-card { font-family: var(--font-type); }
+
+:is(.cs, .paper, .project-card) :is(.navbar, a, button) { font-family: "Open Sans", sans-serif; }
 
 .project-card-casestudy p {
     padding: 5px;
@@ -609,7 +619,7 @@ iframe {
 
 .lab-date {
     font-size: 8px;
-    color: grey;
+    color: var(--ink-meta);
     white-space: nowrap;
 }
 
@@ -799,7 +809,7 @@ body.lab-locked {
     --ink: #2d2822;
     --ink-soft: #4A4238;
     --dark: #1E212B;
-    --muted: grey;
+    --muted: #6e6558;
     --gutter: 140px;   /* left column: headings + captions */
     --gap: 24px;
 }
@@ -849,7 +859,7 @@ body.lab-locked {
 }
 
 .fig figcaption {
-    font-family: monospace;
+    font-family: var(--font-type);
     font-size: 9px;
     font-style: italic;
     line-height: 1.6;
@@ -868,7 +878,7 @@ body.lab-locked {
     background: var(--dark);
     color: var(--paper);
     text-shadow: none;
-    font-family: monospace;
+    font-family: var(--font-type);
     font-size: 11px;
     line-height: 1.6;
     padding: 8px 12px;
@@ -987,24 +997,27 @@ body.lab-locked {
     :root { --cs-pad: 20px; }
 }
 
-/* white dotted cut line under the nav, edge to edge of the page */
-.cs #site-header {
+/* PERFORATION — the tear line under the navbar, on every sheet.
+   A row of punched holes (desk white showing through, a faint shadow on each hole's top lip)
+   ending in two half-round notches bitten out of the sheet's edges, like a tear-off stub. */
+#site-header {
     position: relative;
-    padding-bottom: 22px;
+    padding-bottom: 26px;
 }
 
-.cs #site-header::after {
+#site-header::after {
     content: "";
     position: absolute;
     left: calc(-1 * var(--cs-pad));
     right: calc(-1 * var(--cs-pad));
     bottom: 0;
-    height: 5px;
-    background-image:
-        radial-gradient(ellipse 3px 1.5px at 4px 2px, #fff 80%, transparent 100%),
-        radial-gradient(ellipse 3px 1.5px at 4px 3px, rgba(45, 40, 34, .18) 80%, transparent 100%);
-    background-size: 8px 5px;
-    background-repeat: repeat-x;
+    height: 12px;
+    pointer-events: none;
+    background:
+        radial-gradient(circle at 0 50%, #fff 5px, rgba(45, 40, 34, .16) 5.5px, transparent 6.5px) left center / 12px 12px no-repeat,
+        radial-gradient(circle at 100% 50%, #fff 5px, rgba(45, 40, 34, .16) 5.5px, transparent 6.5px) right center / 12px 12px no-repeat,
+        radial-gradient(circle at 50% 55%, #fff 1.4px, transparent 1.9px) center / 8px 12px space no-repeat,
+        radial-gradient(circle at 50% 42%, rgba(45, 40, 34, .28) 1.5px, transparent 2px) center / 8px 12px space no-repeat;
 }
 
 /* title block: 1 title (big, bold) / 2 tags (medium, grey) / 3 date + credits (small, grey)
@@ -1051,9 +1064,9 @@ body.lab-locked {
 }
 
 .cs-small {
-    font-family: monospace;
+    font-family: var(--font-type);
     font-size: 11px;
-    font-style: italic;
+    /* font-style: italic; */
     line-height: 1.7;
     color: var(--muted);
     text-shadow: none;
@@ -1525,4 +1538,142 @@ body.lab-locked {
 .lx-year {
     flex-shrink: 0;
     white-space: nowrap;
+}
+
+
+/* ═══════════════════════════════
+           PAPER TYPE SCALE
+   Courier New is wide (every glyph is 0.6em), so size steps cost a lot
+   of room. Keep the scale tight and let tone, not size, separate roles:
+     title 24 · heading 14–15 · body 13 · meta 11 (warm grey) · action 12
+   Body carries -0.02em tracking: Courier's spacing is built for a
+   typewriter carriage, and a hair tighter reads as one word, not letters.
+        ═══════════════════════════════ */
+:root {
+    --ink-meta: #6e6558;          /* warm filing grey, 5.4:1 on cream */
+    --type-body: 13px;
+    --type-meta: 11px;
+    --track-body: -0.02em;
+}
+
+/* titles */
+.project-title { font-size: 24px; line-height: 1.15; text-wrap: balance; }
+.paper h4 { font-size: 16px; text-wrap: balance; }
+.cs-row > .cs-head { font-size: 14px; text-wrap: balance; }
+
+/* body: one size everywhere on paper */
+.typed { font-size: 12px; line-height: 1.6; }
+.project-description,
+.project-card-casestudy p,
+.lab-intro p, .lab-panel-text p, .cs-small.lx-intro,
+.lx-dialog .lx-dialog-desc {
+    font-size: var(--type-body);
+    line-height: 1.65;
+    letter-spacing: var(--track-body);
+    text-wrap: pretty;
+}
+
+/* meta: small, set apart by the warm grey rather than by size */
+.project-tags, .project-date,
+.cs-tag, .cs-small,
+.lab-date, .lx-year, .lab-tags, .lx-tags,
+.fig figcaption {
+    font-size: var(--type-meta);
+    color: var(--ink-meta);
+}
+.project-date, .cs-small, .lab-date, .lx-year { font-variant-numeric: tabular-nums; }
+.project-card-casestudy p.cs-mark { font-size: 12px; }
+
+/* actions + names */
+.project-button, .back-button, .lab-link { font-size: 12px; }
+.contact-button { font-size: 13px; }
+.lx-name { font-size: 12px; text-wrap: balance; }
+.cs-small.lx-intro { color: inherit; max-width: 62ch; }
+.side-nav a { font-size: 10px; }
+
+@media (max-width: 480px) {
+    .typed { font-size: 11px; }
+    .project-title { font-size: 20px; }
+}
+
+/* LINK HOVER — the ink stroke
+   One gesture for every text link: a 1px ink line draws in left→right and the text darkens to ink.
+   Page and contact links also carry a faint dotted rule at rest so they read as clickable before hover;
+   the navbar stays clean at rest (position already says "nav"). */
+:root { --ink-stroke-ease: cubic-bezier(.16, 1, .3, 1); }
+
+header ul li a,
+.project-button,
+.back-button,
+.contact-button,
+.lab-link {
+    text-decoration: none;
+    padding-bottom: 2px;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    background-size: 0% 1px;
+    transition: background-size .35s var(--ink-stroke-ease), color .2s ease-out;
+}
+
+/* resting affordance: a dotted rule in Filing Grey, under the drawn line */
+.project-button,
+.back-button,
+.contact-button,
+.lab-link {
+    background-image:
+        linear-gradient(currentColor, currentColor),
+        radial-gradient(circle, var(--ink-meta) .6px, transparent .7px);
+    background-position: 0 100%, 0 100%;
+    background-size: 0% 1px, 3px 1px;
+    background-repeat: no-repeat, repeat-x;
+}
+
+header ul li a:hover,
+header ul li a:focus-visible { color: #2d2822; background-size: 100% 1px; text-decoration: none; }
+
+.project-button:hover, .project-button:focus-visible,
+.back-button:hover, .back-button:focus-visible,
+.contact-button:hover, .contact-button:focus-visible,
+.lab-link:hover, .lab-link:focus-visible {
+    color: #2d2822;
+    background-size: 100% 1px, 3px 1px;
+    text-decoration: none;
+}
+
+.link-arrow {
+    display: inline-block;
+    transition: transform .35s var(--ink-stroke-ease);
+}
+.project-button:hover .link-arrow,
+.project-button:focus-visible .link-arrow { transform: translateX(3px); }
+
+:is(header ul li a, .project-button, .back-button, .contact-button, .lab-link):focus-visible {
+    outline: 1px dotted #2d2822;
+    outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :is(header ul li a, .project-button, .back-button, .contact-button, .lab-link),
+    .link-arrow { transition: none; }
+}
+
+/* CASE STUDY SEQUENCE — previous on the left, next on the right, at the foot of every case study.
+   Order follows the home page: Ministry of Misconduct → Ghar jo hum piche chhod aaye → Zupto. */
+.cs-seq {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 0 0 60px;
+}
+.cs-seq .project-button { margin-top: 0; }
+.cs-seq-next { margin-left: auto; text-align: right; }
+.cs-seq-prev:hover .link-arrow,
+.cs-seq-prev:focus-visible .link-arrow { transform: translateX(-3px); }
+
+@media (max-width: 480px) {
+    .cs-seq { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .cs-seq-next { margin-left: 0; text-align: left; }
 }

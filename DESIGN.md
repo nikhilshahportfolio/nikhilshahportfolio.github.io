@@ -7,41 +7,62 @@ colors:
   carbon-ink: "#2d2822"
   faded-ribbon: "#4A4238"
   redaction-navy: "#1E212B"
-  filing-grey: "#808080"
+  filing-grey: "#6e6558"
   carbon-haze: "#d7d8e4"
   scrim: "rgba(45, 40, 34, .45)"
   placeholder-wash: "rgba(45, 40, 34, .08)"
 typography:
   display:
-    fontFamily: "Open Sans, sans-serif"
+    fontFamily: '"Courier New", Courier, monospace'
     fontSize: "34px"
     fontWeight: 700
     lineHeight: 1.1
   headline:
-    fontFamily: "Open Sans, sans-serif"
-    fontSize: "1.5em"
+    fontFamily: '"Courier New", Courier, monospace'
+    fontSize: "24px"
     fontWeight: 700
+    lineHeight: 1.15
   title:
-    fontFamily: "Open Sans, sans-serif"
-    fontSize: "13px"
+    fontFamily: '"Courier New", Courier, monospace'
+    fontSize: "14px"
     fontWeight: 700
     lineHeight: 1.4
   body:
+    fontFamily: '"Courier New", Courier, monospace'
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.65
+    letterSpacing: "-0.02em"
+  body-casestudy:
+    fontFamily: '"Courier New", Courier, monospace'
+    fontSize: "13px"
+    fontWeight: 400
+    lineHeight: 1.65
+    letterSpacing: "-0.02em"
+  typed:
+    fontFamily: '"Courier New", Courier, monospace'
+    fontSize: "12px"
+    fontWeight: 400
+    lineHeight: 1.6
+  meta:
+    fontFamily: '"Courier New", Courier, monospace'
+    fontSize: "11px"
+    fontWeight: 400
+  label:
+    fontFamily: "Open Sans, sans-serif"
+    fontSize: "12px"
+    fontWeight: 600
+  interface:
     fontFamily: "Open Sans, sans-serif"
     fontSize: "12px"
     fontWeight: 400
-    lineHeight: 1.8
-  label:
-    fontFamily: "Open Sans, sans-serif"
-    fontSize: "9px"
-    fontWeight: 600
   caption:
-    fontFamily: "monospace"
-    fontSize: "9px"
+    fontFamily: '"Courier New", Courier, monospace'
+    fontSize: "11px"
     fontWeight: 400
     lineHeight: 1.6
   meta-mono:
-    fontFamily: "monospace"
+    fontFamily: '"Courier New", Courier, monospace'
     fontSize: "11px"
     fontWeight: 400
     lineHeight: 1.7
@@ -99,16 +120,16 @@ components:
 
 **Creative North Star: "The Filed Dossier"**
 
-Every page is a sheet of Archive Cream paper on a plain white desk, holding a case file: typed captions, margin headings, a dotted cut line under the masthead, and one line per section blacked out by a redaction bar. It reads like a government file put together by someone with an editor's eye. Minimal, detailed, and seriously playful: the playfulness lives in the details (the redaction bar, the stamped controls, the dotted leaders from heading to margin label), never in motion or spectacle.
+Every page is a sheet of Archive Cream paper on a plain white desk, holding a case file: typed captions, margin headings, a perforated tear line under the masthead, and one line per section blacked out by a redaction bar. It reads like a government file put together by someone with an editor's eye. Minimal, detailed, and seriously playful: the playfulness lives in the details (the redaction bar, the stamped controls, the dotted leaders from heading to margin label), never in motion or spectacle.
 
 Type is small and dense, set lowercase, and the page is mostly paper. Hierarchy comes from weight and position (bold headings in a left gutter, grey meta to the right), not from size jumps or colour. The work carries the page: images run full column width, text sits quietly around them, and the interface stays out of the way.
 
-The system is flat and still on purpose. Nothing animates, nothing floats, and depth is the cream sheet against the white page and nothing else. It has to load fast on a slow mobile connection, so it uses one web font, system monospace, and no frameworks.
+The system is flat and still on purpose. Nothing animates, nothing floats, and depth is the cream sheet against the white page and nothing else. It has to load fast on a slow mobile connection, so it uses one web font (Open Sans, for the interface), the installed Courier New for everything on paper, and no frameworks.
 
 **Key Characteristics:**
 - Cream sheets (Archive Cream) on a white desk, square corners, no shadows
-- Open Sans for everything you read; system monospace for anything "typed" (captions, dates, controls)
-- Lowercase copy, small sizes (9–13px for most text), generous line-height (1.8)
+- Courier New for everything on paper, as if typed onto the sheet; Open Sans for anything you click or navigate with
+- Lowercase copy, compact sizes (11–13px for most paper text), generous line-height (1.6–1.7). Hierarchy comes from tone (ink vs. Filing Grey), not size steps: Courier is wide, so every size step costs a lot of room
 - Margin-gutter headings on case studies, with one redaction-bar highlight per section
 - Controls are 1px ink outlines that invert to solid ink, with no transitions
 - A faint blue-grey text-shadow on paper, like ink bleeding into the sheet
@@ -127,7 +148,7 @@ Two colours do almost all the work, warm cream paper and warm near-black ink, wi
 ### Neutral
 - **Archive Cream** (#fff8e6): every sheet (`.paper`, `.project-card`, `.project-card-casestudy`, the Aech Labs page and project window), plus the text colour on inverted controls and the redaction bar.
 - **Desk White** (#ffffff): the page behind the sheets. On mobile, the 14px side margins let it show around each card.
-- **Filing Grey** (#808080): metadata only: dates, tags, captions, inactive margin nav labels, and dotted leaders.
+- **Filing Grey** (#6e6558): metadata only: dates, tags, captions, inactive margin nav labels, and dotted leaders. A warm grey pulled from the ink, not a neutral one, at 5.4:1 on cream. Applied site-wide through `--ink-meta` and `--muted`.
 - **Carbon Haze** (#d7d8e4): only used as `text-shadow: 1px 1px 1px` on text set on paper, for the ink-bleed effect. Typed elements (captions, tags, the redaction bar, controls) turn it off.
 - **Scrim** (rgba(45, 40, 34, .45)): the backdrop behind the project window.
 - **Placeholder Wash** (rgba(45, 40, 34, .08)): the empty-image box, visible only when an image is missing.
@@ -137,27 +158,34 @@ Two colours do almost all the work, warm cream paper and warm near-black ink, wi
 
 **The One Redaction Rule.** Redaction Navy appears once per case-study section, as the highlight bar, and nowhere else. It only works because it's rare.
 
-**The Grey Is Metadata Rule.** Filing Grey is for dates, tags, captions and inactive nav, never for body copy. On cream it is only 3.7:1, below AA for small text, so it's a known contrast gap to fix, not something to spread.
+**The Grey Is Metadata Rule.** Filing Grey is for dates, tags, captions and inactive nav, never for body copy. Use the warm #6e6558, never a neutral grey: #808080 on cream is only 3.7:1 and fails AA for small text.
 
 ## Typography
 
-**Body Font:** Open Sans (with sans-serif), loaded from Google Fonts, weights 300–800 with italics
-**Label/Mono Font:** the system `monospace` stack, no web font
+**Paper Font:** Courier New (with Courier, monospace), the installed system face, no web font
+**Interface Font:** Open Sans (with sans-serif), loaded from Google Fonts, weights 300–800 with italics
+**Control Mono:** the system `monospace` stack, kept only for the Aech Labs project-window controls and lab tags
 
-**Character:** a plain, humanist sans that stays out of the way, paired with whatever typewriter face the device ships. The sans is the writing and the mono is the filing clerk's stamp.
+**Character:** everything printed on a sheet is typed, so the dossier reads as one typewritten file. Everything you click or steer with (top nav, margin nav, text links, contact links, the clock, the footer) stays in Open Sans, the desk's voice rather than the file's. The split tells you what is content and what is interface without any colour or box.
 
 ### Hierarchy
-- **Display** (700, 34px, line-height 1.1): the case-study title in the header block (`.cs-title`). Lowercase.
-- **Headline** (700, browser h2 ≈ 24px; 18px on mobile): project titles on the home page cards. The intro name is 20px.
-- **Title** (700, 12–16px, line-height 1.3–1.4): margin headings on case studies (13px), Aech Labs card names (12px), project window title (16px).
-- **Body** (400, 12px, line-height 1.8): all running text. The home intro uses 11px. Long case-study text (more than two paragraphs) runs in two magazine columns with a 32px gap.
-- **Label** (600, 9px): text links like "view full casestudy > >". Tags are 9px italic and dates 8–9px, both in Filing Grey.
-- **Caption / Meta-mono** (monospace, 9–11px, italic, line-height 1.6–1.7): figure captions (9px), case-study date and credits (11px), the redaction bar (11px, not italic), control labels (10px, not italic).
+- **Display** (Courier New 700, 34px, line-height 1.1): the case-study title (`.cs-title`). Lowercase.
+- **Headline** (Courier New 700, 24px, line-height 1.15, balanced wrap; 20px on mobile): project titles on the home cards. The home "about me" heading is 16px.
+- **Title** (700, 12–16px, line-height 1.3–1.4): margin headings on case studies (Courier, 14px), Aech Labs card names (Open Sans 12px bold, balanced wrap, because the whole card is a link), project window title (16px).
+- **Body** (Courier New 400, 13px, line-height 1.65, -0.02em tracking, pretty wrap): home card descriptions, the about text and the Aech Labs intro (max 62ch).
+- **Body, case study** (Courier New 400, 13px, line-height 1.65, -0.02em tracking): running text on case studies and in the project window. Long text (more than two paragraphs) runs in two magazine columns with a 32px gap.
+- **Typed intro** (Courier New 400, 12px, line-height 1.6; 11px on mobile): the home intro lines, set like a typewritten form with underscored lines, a `****` / `++++` rule and an indented sign-off.
+- **Meta** (Courier New 400, 11px, Filing Grey): home card tags (italic) and dates (tabular figures). Case-study date, credits, tags and Aech Labs years and tags use 11px too. Filing Grey (5.4:1 on cream) keeps 11px legible while letting it step back.
+- **Label** (Open Sans 600, 12px): text links such as "view full casestudy > >". Contact links are 13px 500.
+- **Interface** (Open Sans 400, 10–12px): top nav (12px), clock, margin nav and footer (10px).
+- **Caption** (Courier New italic, 11px, line-height 1.6, Filing Grey): figure captions. The redaction bar is 12px, not italic.
 
 ### Named Rules
 **The Lowercase Rule.** Copy is written in lowercase, including titles and tags. Don't title-case or uppercase anything for emphasis.
 
-**The Typed Means Mono Rule.** Anything that reads as filed, stamped or machine-printed (captions, dates, credits, button labels, the redaction bar) is monospace. Anything someone wrote is Open Sans.
+**The Typed Paper Rule.** If it is printed on a sheet, it is Courier New. If you can click it, or it belongs to the browser frame around the sheets (nav, clock, footer), it is Open Sans. The CSS enforces this with one override: links, buttons and the navbar inside a sheet switch back to Open Sans.
+
+**The Courier Floor Rule.** Courier New runs small (low x-height, thin strokes, plus the ink-bleed text-shadow), so set it one step larger than a sans would need. No paper text on any page goes below 11px; metadata sits at the 11px floor and recedes by tone (Filing Grey), never by shrinking further.
 
 ## Layout
 
@@ -181,7 +209,7 @@ Fully flat. The only depth is the cream sheet against the white page. Cards have
 
 ## Shapes
 
-Every corner is square (0px). Edges are 1px Carbon Ink solid lines on controls and the project window, or 1px Filing Grey dotted lines for leaders. The one ornament is the perforated cut line under the case-study masthead: a 5px repeating row of white ellipses with a faint ink shadow, running the full width of the sheet.
+Every corner is square (0px). Edges are 1px Carbon Ink solid lines on controls and the project window, or 1px Filing Grey dotted lines for leaders. The one ornament is the perforated tear line under the navbar on every sheet: a row of 3px punched holes every 8px (desk white showing through, a faint ink shadow on each hole's top lip), running the full width of the sheet and ending in two 10px half-round notches bitten out of its left and right edges, like a tear-off stub.
 
 **The Square Corner Rule.** No border-radius anywhere. A rounded corner would read as app UI, not paper.
 
@@ -190,23 +218,23 @@ Every corner is square (0px). Edges are 1px Carbon Ink solid lines on controls a
 ### Buttons
 Quiet and exact: they hardly look like buttons until you hover or focus them.
 - **Shape:** square, 1px solid Carbon Ink border (0px radius).
-- **Bordered control** (close, window link, slide arrows): Archive Cream or transparent background, Carbon Ink monospace text at 10px, padding 2–5px × 10–12px. Slide arrows are 32px squares.
+- **Bordered control** (close, window link, slide arrows): Archive Cream or transparent background, Carbon Ink text at 10px, padding 2–5px × 10–12px. Slide arrows are 32px squares.
 - **Hover / Focus:** an instant swap to a Carbon Ink fill with Archive Cream text. No transition, no transform.
-- **Text link** (the main CTA, e.g. "view full casestudy > >"): Faded Ribbon, Open Sans 9px 600, no underline at rest, underlined on hover. No button shape.
+- **Text link** (the main CTA, e.g. "view full casestudy > >"): Faded Ribbon, Open Sans 12px 600. At rest a faint dotted Filing Grey rule sits under it; on hover or focus a 1px ink line draws in left to right (0.35s, expo ease-out), the text darkens to Carbon Ink and the trailing `> >` nudges 3px forward. No button shape. Contact links share the same treatment; navbar links skip the resting rule and only draw the line on hover.
 
 ### Cards / Containers
-- **Paper card:** Archive Cream, square corners, no shadow or border, 45px side padding, a min-height of 600–680px on the home page. Holds a title, then tags and date on one row, a hero image, a description and a text link.
-- **Lab card:** no container. A 16:9 image, then the name (12px bold) with the year (9px grey) on one baseline, then monospace italic tags. Hovering underlines the name. Focus shows a 1px dotted ink outline, 4px offset.
+- **Paper card:** Archive Cream, square corners, no shadow or border, 45px side padding, a min-height of 600–680px on the home page. Holds a Courier title, then tags and date on one row (11px Filing Grey), a hero image, a 13px Courier description and an Open Sans text link.
+- **Lab card:** no container. A 16:9 image, then the name (Open Sans 12px bold) with the year (11px Filing Grey) on one baseline, then monospace italic tags. Hovering underlines the name. Focus shows a 1px dotted ink outline, 4px offset.
 
 ### Navigation
-- **Top nav:** Filing Grey links in a single justified row at 12px (11px and wrapping on mobile), no decoration, injected from `Fn.js`.
+- **Top nav:** Filing Grey links in a single justified row at 12px (11px and wrapping on mobile), no decoration at rest (on hover the ink stroke draws in and the link darkens to Carbon Ink), injected from `Fn.js`.
 - **Margin nav:** fixed labels at 10px Filing Grey in the left margin, Carbon Ink when active, underlined on hover. Sub-items are indented 10px. Each label is tied to its heading by a dotted leader that turns ink when active and disappears once the label pins to the top.
 
 ### Highlight Bar (signature)
-The redaction bar: a full-width Redaction Navy band holding one key sentence per section, in 11px Archive Cream monospace with 8px × 12px padding and no text-shadow. It's the dossier's stamp: one per section, never decorative.
+The redaction bar: a full-width Redaction Navy band holding one key sentence per section, in 12px Archive Cream Courier New with 8px × 12px padding and no text-shadow. It's the dossier's stamp: one per section, never decorative.
 
 ### Figure + Caption (signature)
-An image, GIF or iframe at full column width, with a 9px monospace italic caption in Filing Grey under it (6px top padding, no text-shadow). It reads like an evidence label.
+An image, GIF or iframe at full column width, with an 11px Courier New italic caption in Filing Grey under it (6px top padding, no text-shadow). It reads like an evidence label.
 
 ### Project Window
 A native `<dialog>` at a fixed 960 × 560px (capped at 94vw / 86vh). Media takes 3/5 (contained, never cropped) and text 2/5 (scrolls if long). 1px Carbon Ink border, Archive Cream background, Scrim behind it. The close button sits top-right in an Archive Cream box, slide arrows sit on the image edges and the count sits top-left. It stacks into one column on mobile. It opens and closes with no animation.
@@ -215,8 +243,8 @@ A native `<dialog>` at a fixed 960 × 560px (capped at 94vw / 86vh). Media takes
 
 ### Do:
 - **Do** put every surface on Archive Cream (#fff8e6) over Desk White (#ffffff), with square corners and no shadow.
-- **Do** set text in Carbon Ink (#2d2822) or Faded Ribbon (#4A4238), and keep Filing Grey (#808080) for metadata.
-- **Do** use monospace for typed and filed things (captions, dates, credits, control labels) and Open Sans for writing.
+- **Do** set text in Carbon Ink (#2d2822) or Faded Ribbon (#4A4238), and keep Filing Grey (#6e6558) for metadata.
+- **Do** set everything printed on a sheet in Courier New, and everything clickable or part of the frame (nav, links, buttons, clock, footer) in Open Sans.
 - **Do** separate case-study sections with 120px of empty paper and put the section heading in the 140px left gutter.
 - **Do** give each case-study section at most one Redaction Navy (#1E212B) highlight bar.
 - **Do** make controls 1px Carbon Ink outlines that invert to a solid ink fill on hover and focus.
@@ -226,6 +254,6 @@ A native `<dialog>` at a fixed 960 × 560px (capped at 94vw / 86vh). Media takes
 - **Don't** add animations, scroll effects, loading screens or interactive toys. The page stays still.
 - **Don't** use border-radius, drop shadows, gradients or coloured accents.
 - **Don't** use generic SaaS layouts, like hero sections with gradient blobs.
-- **Don't** add heavy JS frameworks or extra web fonts. Open Sans plus system monospace is the whole type budget.
-- **Don't** use Filing Grey for body copy, and don't push it smaller than it already is.
+- **Don't** add heavy JS frameworks or extra web fonts. Open Sans plus the installed Courier New (and system monospace for lab controls) is the whole type budget.
+- **Don't** use Filing Grey for body copy, and don't set Courier metadata below 11px.
 - **Don't** separate sections with horizontal rules or boxed panels. Use empty space.
