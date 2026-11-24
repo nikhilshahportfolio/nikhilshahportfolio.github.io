@@ -107,7 +107,7 @@ body {
     min-height: 600px;
 }
 
-.paper h4 {
+.paper h4, .about-head {
     padding-top: 25px;
 }
 
@@ -962,7 +962,7 @@ body.lab-locked {
     top: calc(50px + .68em);
 }
 
-.paper h4.nav-heading::before {
+.paper h4.nav-heading::before, .about-head.nav-heading::before {
     top: calc(25px + .7em);
 }
 
@@ -1117,7 +1117,7 @@ body.lab-locked {
 /* homepage only: no dotted lines from the headings
    (.project-title and .paper h4 headings only exist on index.html) */
 .project-title.nav-heading::before,
-.paper h4.nav-heading::before {
+.paper h4.nav-heading::before, .about-head.nav-heading::before {
     display: none;
 }
 
@@ -1571,7 +1571,7 @@ body.lab-locked {
 
 /* titles */
 .project-title { font-size: 24px; line-height: 1.15; text-wrap: balance; }
-.paper h4 { font-size: 16px; text-wrap: balance; }
+.paper h4, .about-head { font-size: 16px; margin-block: 1.33em; text-wrap: balance; }
 .cs-row > .cs-head { font-size: 14px; text-wrap: balance; }
 
 /* body: one size everywhere on paper */

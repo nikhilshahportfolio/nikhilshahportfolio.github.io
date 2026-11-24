@@ -57,7 +57,7 @@ setInterval(updateClock, 1000);
     a.textContent = el.dataset.nav;
     nav.appendChild(a);
 
-    const h = el.querySelector('.cs-head, .project-title, h4');
+    const h = el.querySelector('.cs-head, .project-title, .about-head, h4');
     if (h) h.classList.add('nav-heading');
     items.push({ el, a, h });
   });
