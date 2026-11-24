@@ -161,21 +161,33 @@ setInterval(updateClock, 1000);
   const $ = id => document.getElementById(id);
   let slides = [];
   let index = 0;
+  let loopClips = false;   // card has data-loop: its clips play like gifs (muted, looping, no controls)
 
   const VIDEO = /\.(mp4|webm|mov|m4v)$/i;   // anything else is treated as an image
+
+  const VIMEO = /vimeo\.com\/(?:video\/)?(\d+)/i;  // vimeo links play in an embedded player
 
   function show(i) {
     index = (i + slides.length) % slides.length;
     const src = slides[index];
-    const isVideo = VIDEO.test(src);
+    const vimeo = src.match(VIMEO);
+    const isVideo = !vimeo && VIDEO.test(src);
     const v = $('lxVideo');
+    const embed = $('lxEmbed');
 
     v.pause();
-    $('lxImg').hidden = isVideo;
+    $('lxImg').hidden = isVideo || !!vimeo;
     v.hidden = !isVideo;
+    embed.hidden = !vimeo;
+    if (!vimeo) embed.removeAttribute('src');   // unloading the player stops its sound
 
-    if (isVideo) {
+    if (vimeo) {
+      embed.src = 'https://player.vimeo.com/video/' + vimeo[1] + '?dnt=1&title=0&byline=0&portrait=0';
+    } else if (isVideo) {
+      v.controls = !loopClips;
+      v.muted = v.loop = v.autoplay = loopClips;
       v.src = src;
+      if (loopClips) v.play().catch(() => {});
     } else {
       v.removeAttribute('src');
       v.load();
@@ -189,6 +201,7 @@ setInterval(updateClock, 1000);
     if (!card) return;
     e.preventDefault();
 
+    loopClips = 'loop' in card.dataset;
     const img = card.querySelector('img');
     const desc = card.querySelector('.lx-desc');
 
@@ -234,7 +247,10 @@ setInterval(updateClock, 1000);
     if (e.key === 'ArrowRight') show(index + 1);
   });
 
-  dlg.addEventListener('close', () => $('lxVideo').pause());   // stop the video when the window closes
+  dlg.addEventListener('close', () => {   // stop the video when the window closes
+    $('lxVideo').pause();
+    $('lxEmbed').removeAttribute('src');
+  });
 
   $('lxClose').addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });  // click outside closes

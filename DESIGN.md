@@ -236,6 +236,8 @@ The redaction bar: a full-width Redaction Navy band holding one key sentence per
 ### Figure + Caption (signature)
 An image, GIF or iframe at full column width, with an 11px Courier New italic caption in Filing Grey under it (6px top padding, no text-shadow). It reads like an evidence label.
 
+**Margin variant** (`.fig.cs-margin-fig`): a long exhibit pinned on the desk to the right of the sheet, like a receipt clipped to the file. On screens 1200px and wider it sits 32px outside the sheet, up to 240px wide, with its bottom flush with its section's last line of text and the caption above it. Below 1200px it drops back into the text column at up to 240px. Used once, for the Zupto health-tax bill.
+
 ### Project Window
 A native `<dialog>` at a fixed 960 × 560px (capped at 94vw / 86vh). Media takes 3/5 (contained, never cropped) and text 2/5 (scrolls if long). 1px Carbon Ink border, Archive Cream background, Scrim behind it. The close button sits top-right in an Archive Cream box, slide arrows sit on the image edges and the count sits top-left. It stacks into one column on mobile. It opens and closes with no animation.
 

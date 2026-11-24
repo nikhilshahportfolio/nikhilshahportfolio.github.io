@@ -2,6 +2,8 @@
 :root { --font-type: "Courier New", Courier, monospace; }
 
 html { scroll-behavior: smooth; }
+/* width/height attributes reserve space; this keeps css widths + aspect-ratio in charge of the shape */
+img { height: auto; }
 
 .side-nav {
     position: fixed;
@@ -854,7 +856,8 @@ body.lab-locked {
 }
 
 .fig img,
-.fig iframe {
+.fig iframe,
+.fig video {
     display: block;
 }
 
@@ -1385,8 +1388,18 @@ body.lab-locked {
     background: rgba(45, 40, 34, .08);
 }
 
+/* vimeo player in the window: 16:9, centred in the media box */
+.lx-dialog-img iframe {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    border: 0;
+}
+
 .lx-dialog-img img[hidden],
-.lx-dialog-img video[hidden] {
+.lx-dialog-img video[hidden],
+.lx-dialog-img iframe[hidden] {
     display: none;
 }
 
@@ -1676,4 +1689,25 @@ header ul li a:focus-visible { color: #2d2822; background-size: 100% 1px; text-d
 @media (max-width: 480px) {
     .cs-seq { flex-direction: column; align-items: flex-start; gap: 14px; }
     .cs-seq-next { margin-left: 0; text-align: left; }
+}
+
+/* MARGIN FIGURE — a long image pinned outside the sheet, on the desk to its right.
+   Its bottom lines up with the end of its section's text (Zupto: the health-tax bill beside "the bill").
+   On narrower screens there's no desk to spare, so it falls back into the text column. */
+.cs-margin-fig img { width: 100%; height: auto; }
+.cs-row > .cs-margin-fig { max-width: 240px; margin-top: 18px; }
+
+@media (min-width: 1200px) {
+    .cs-row:has(> .cs-margin-fig) { position: relative; }
+    .cs-row > .cs-margin-fig {
+        position: absolute;
+        left: calc(100% + var(--cs-pad) + 32px);
+        bottom: calc(120px + 6px);     /* section bottom padding + last paragraph's margin: image ends on the last line of text */
+        display: flex;
+        flex-direction: column-reverse;  /* caption sits above, so the image itself is what aligns */
+        width: min(240px, calc((100vw - 800px) / 2 - 64px));
+        max-width: none;
+        margin: 0;
+    }
+    .cs-margin-fig figcaption { padding: 0 0 6px; }
 }
