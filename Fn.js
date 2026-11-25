@@ -128,7 +128,7 @@ setInterval(updateClock, 1000);
 
 
 // aechlabs: put the newest project first, using the date text in .lx-year
-// understands "nov 2024", "2024", and "2025-26" (uses the later year). no month = end of that year.
+// understands "nov 2024", "2024", and "2025-26" (uses the later year). no month = january of that year.
 (function labSort() {
   const grid = document.querySelector('.lx-grid');
   if (!grid) return;
@@ -142,7 +142,7 @@ setInterval(updateClock, 1000);
     let year = years[years.length - 1];
     if (year.length === 2) year = years[0].slice(0, 2) + year;   // "2025-26" -> 2026
     const m = MONTHS.findIndex(name => text.includes(name));
-    return Number(year) * 100 + (m === -1 ? 12 : m + 1);
+    return Number(year) * 100 + (m === -1 ? 1 : m + 1);
   }
 
   const cards = Array.from(grid.querySelectorAll('.lx-card'));
@@ -206,7 +206,8 @@ setInterval(updateClock, 1000);
     const desc = card.querySelector('.lx-desc');
 
     // first slide is the card image, the rest come from data-images (comma separated)
-    const first = img ? img.getAttribute('src') : '';
+    // data-skip-thumb: the card image is only a poster, so open straight on the clip
+    const first = img && !('skipThumb' in card.dataset) ? img.getAttribute('src') : '';
     slides = first ? [first] : [];   // an empty thumbnail is skipped
     if (card.dataset.images) {
       card.dataset.images.split(',').forEach(s => {
@@ -219,10 +220,11 @@ setInterval(updateClock, 1000);
     $('lxSlides').hidden = slides.length < 2;
     show(0);
 
-    $('lxTitle').textContent = card.querySelector('.lx-name').textContent;
+    // copy the nodes, not just the text, so italic hindi words stay italic in the window
+    $('lxTitle').replaceChildren(...Array.from(card.querySelector('.lx-name').childNodes, n => n.cloneNode(true)));
     $('lxDate').textContent = card.querySelector('.lx-year').textContent;
     $('lxTags').textContent = card.querySelector('.lx-tags').textContent;
-    $('lxDesc').textContent = desc ? desc.textContent.trim() : '';
+    $('lxDesc').replaceChildren(...(desc ? Array.from(desc.childNodes, n => n.cloneNode(true)) : []));
 
     // link only shows if the card has data-link
     const link = card.dataset.link;
@@ -231,6 +233,7 @@ setInterval(updateClock, 1000);
       a.href = link;
       a.textContent = (card.dataset.linkLabel || 'open project') + ' > >';
       a.hidden = false;
+      a.toggleAttribute('data-reader', 'reader' in card.dataset);
     } else {
       a.hidden = true;
     }
@@ -251,6 +254,29 @@ setInterval(updateClock, 1000);
     $('lxVideo').pause();
     $('lxEmbed').removeAttribute('src');
   });
+
+  // data-reader links (the comic) open full screen inside this page instead of a new site,
+  // so getting back is one tap, not flipping back through every page.
+  // the iframe is made fresh each time and removed on close, so its page flips leave no back-button history.
+  const reader = $('lxReader');
+  $('lxLink').addEventListener('click', e => {
+    const a = e.currentTarget;
+    if (!a.hasAttribute('data-reader') || !reader) return;
+    e.preventDefault();
+    const frame = document.createElement('iframe');
+    frame.src = a.href;
+    frame.title = $('lxTitle').textContent;
+    frame.allow = 'fullscreen';
+    frame.allowFullscreen = true;
+    $('lxReaderFrame').replaceChildren(frame);
+    $('lxReaderOpen').href = a.href;
+    reader.showModal();
+    $('lxReaderBack').focus();
+  });
+  if (reader) {
+    $('lxReaderBack').addEventListener('click', () => reader.close());
+    reader.addEventListener('close', () => $('lxReaderFrame').replaceChildren());
+  }
 
   $('lxClose').addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });  // click outside closes
